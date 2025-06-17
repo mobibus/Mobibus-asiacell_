@@ -142,7 +142,7 @@
       const megabytes = amount / internetRate;
       const sms = amount / smsRate;
 
-      // تحويل الميغابايت إلى جيجابايت لو وصل 1000 أو أكثر
+      // تحويل الميغابايت إلى جيجابايت لو وصل 1024 أو أكثر
       let internetText = "";
       if (megabytes >= 1000) {
         const gigabytes = megabytes / 1024;
