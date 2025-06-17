@@ -5,97 +5,97 @@
   <title>أسياسيل - صرفيات الخطوط</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #fff;
-      max-width: 480px;
-      margin: 30px auto;
+      font-family: 'Arial', sans-serif;
+      background: #fff;
+      color: #b30000;
       padding: 20px;
-      border: 2px solid #cc0000;
+      max-width: 500px;
+      margin: auto;
+      border: 2px solid #b30000;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(204,0,0,0.3);
-      color: #990000;
     }
     h1, h2 {
       text-align: center;
-      margin: 5px 0;
+      color: #cc0000;
     }
-    select, input, button {
+    label {
+      margin-top: 15px;
+      display: block;
+      font-weight: bold;
+    }
+    select, input {
       width: 100%;
-      margin-top: 10px;
       padding: 10px;
       font-size: 16px;
-      border: 1px solid #cc0000;
+      margin-top: 6px;
       border-radius: 6px;
+      border: 1px solid #cc0000;
     }
     button {
+      margin-top: 20px;
       background: #cc0000;
       color: white;
-      font-weight: bold;
+      padding: 10px;
+      border: none;
+      width: 100%;
+      font-size: 18px;
+      border-radius: 6px;
       cursor: pointer;
     }
     #output {
       margin-top: 20px;
-      background: #fff0f0;
       padding: 15px;
-      border-radius: 8px;
+      background: #fff0f0;
       border: 1px solid #cc0000;
-      min-height: 80px;
+      border-radius: 6px;
+      white-space: pre-line;
     }
-    p.footer {
+    .footer {
       text-align: center;
-      font-size: 13px;
-      margin-top: 30px;
-      color: #aa0000;
+      font-size: 12px;
+      color: #880000;
+      margin-top: 40px;
+      font-style: italic;
     }
   </style>
 </head>
 <body>
-
   <h1>أسياسيل</h1>
   <h2>صرفيات أنواع خطوط أسياسيل</h2>
 
-  <label>نوع الخط:</label>
+  <label for="lineType">اختر نوع الخط:</label>
   <select id="lineType">
     <option value="yooz">خط yooz</option>
-    <option value="قديم">خط الدفع المسبق القديم</option>
-    <option value="جديد">خط الدفع المسبق الجديد</option>
-    <option value="شباب">خط الشباب</option>
-    <option value="ماس">خط الماس</option>
-    <option value="يوم">خط يوم علينا ويوم عليك</option>
-    <option value="عتبات">خط العتبات</option>
-    <option value="ايليت">خط ايليت</option>
-    <option value="مؤسسات">خطّ المؤسسات</option>
-    <option value="اي كنترول">خط اي كنترول</option>
-    <option value="خلات">خط خلات</option>
-    <option value="دينار">خط الدينار (سليمانية)</option>
-    <option value="بزنز">خط بزنز ماكس</option>
+    <option value="other">خط الدفع المسبق القديم</option>
+    <option value="other">خط الدفع المسبق الجديد</option>
+    <option value="other">خط الشباب</option>
+    <option value="other">خط الماس</option>
+    <option value="other">خط يوم علينة ويوم عليك</option>
+    <option value="other">خط العتبات</option>
+    <option value="other">خط ايليت</option>
+    <option value="other">خطّ المؤسسات</option>
+    <option value="other">خط اي كنترول</option>
+    <option value="other">خط خلات</option>
+    <option value="other">خط الدينار (سليمانية)</option>
+    <option value="other">خط بزنز ماكس</option>
   </select>
 
-  <label>المبلغ (كوين أو دينار):</label>
-  <input type="number" id="amount" min="1" placeholder="ادخل المبلغ هنا">
-
-  <label>نوع الخدمة:</label>
-  <select id="serviceType">
-    <option value="all">📋 الكل</option>
-    <option value="call">📞 الاتصال فقط</option>
-    <option value="internet">🌐 الإنترنت فقط</option>
-    <option value="sms">✉️ الرسائل فقط</option>
-  </select>
+  <label for="amount">المبلغ:</label>
+  <input type="number" id="amount" placeholder="أدخل المبلغ بالدينار أو الكوين" />
 
   <button onclick="calculate()">احسب الآن</button>
 
   <div id="output"></div>
 
-  <p class="footer">© تصميم frn.mohmed.wmobibus@asiacell.com - موبي باص</p>
+  <p class="footer">© تصميم. frn.mohmed.wmobibus@asiacell.com - موبي باص</p>
 
   <script>
-    function formatNumber(num) {
-      return Math.floor(num);
+    function formatNumber(n) {
+      return Math.floor(n);
     }
 
     function calculate() {
       const line = document.getElementById("lineType").value;
-      const service = document.getElementById("serviceType").value;
       const amount = parseFloat(document.getElementById("amount").value);
       const output = document.getElementById("output");
 
@@ -104,44 +104,35 @@
         return;
       }
 
-      let callRate = 2.4;
-      let smsRate = 50;
-      let internetRate = 4;
-      let isYooz = (line === "yooz");
+      let callRate, smsRate, internetRate;
 
-      if (isYooz) {
-        callRate = 2;
+      if (line === "yooz") {
+        callRate = 2; // كوين/ثانية
         smsRate = 50;
         internetRate = 4;
-      }
-
-      const seconds = amount / callRate;
-      const minutes = seconds / 60;
-      const megabytes = isYooz ? amount / internetRate : 0;
-      const gigabytes = megabytes / 1024;
-      const sms = amount / smsRate;
-
-      let internetText = "";
-      if (megabytes >= 1024) {
-        internetText = `${formatNumber(gigabytes)} GB (${formatNumber(megabytes)} MB)`;
       } else {
-        internetText = `${formatNumber(megabytes)} MB`;
+        callRate = 2; // دينار/ثانية
+        smsRate = 50;
+        internetRate = null; // ما مذكور
       }
 
-      let result = "";
+      let callSecs = amount / callRate;
+      let callMins = callSecs / 60;
+      let smsCount = amount / smsRate;
 
-      if (service === "all" || service === "call")
-        result += `📞 الاتصال: ${formatNumber(minutes)} دقيقة\n`;
+      let netMB = internetRate ? (amount / internetRate) : 0;
+      let netText = "";
+      if (netMB >= 1024) {
+        netText = `${formatNumber(netMB / 1024)} GB (${formatNumber(netMB)} MB)`;
+      } else {
+        netText = `${formatNumber(netMB)} MB`;
+      }
 
-      if ((service === "all" || service === "internet") && isYooz)
-        result += `🌐 الإنترنت: ${internetText}\n`;
-
-      if (service === "all" || service === "sms")
-        result += `✉️ الرسائل: ${formatNumber(sms)} رسالة`;
+      let result = `📞 الاتصال: ${formatNumber(callMins)} دقيقة\n✉️ الرسائل: ${formatNumber(smsCount)} رسالة`;
+      if (internetRate) result += `\n🌐 الإنترنت: ${netText}`;
 
       output.textContent = result;
     }
   </script>
-
 </body>
 </html>
