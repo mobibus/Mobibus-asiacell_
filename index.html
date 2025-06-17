@@ -1,105 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>Mobibus - Asiacell</title>
+  <title>حاسبة صرف كوينات يوز</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f2f2f2;
-      padding: 20px;
+      font-family: Arial;
+      direction: rtl;
+      text-align: center;
+      margin-top: 50px;
+      background-color: #f4f4f4;
     }
-    h2 {
-      color: #333;
+    input, button {
+      margin: 10px;
+      padding: 10px;
+      font-size: 16px;
+      width: 200px;
     }
-    label {
-      margin-top: 10px;
-      display: block;
-      font-weight: bold;
-    }
-    select, input {
-      padding: 8px;
-      margin-top: 5px;
-      width: 100%;
-      max-width: 300px;
-    }
-    button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    .result {
+    #result {
       margin-top: 20px;
-      padding: 15px;
-      border-radius: 5px;
-      font-weight: bold;
-      max-width: 400px;
+      font-size: 18px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      display: inline-block;
     }
     .green {
-      background-color: #d4edda;
-      color: #155724;
+      color: green;
+      font-weight: bold;
     }
     .red {
-      background-color: #f8d7da;
-      color: #721c24;
+      color: red;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
 
-  <h2>Mobibus - Asiacell Usage Checker</h2>
+  <h2>حاسبة صرف كوينات خط يوز</h2>
 
-  <label for="line">Choose Line Type:</label>
-  <select id="line">
-    <option>Almas</option>
-    <option>Line Diner</option>
-    <option>Line Youth</option>
-    <option>Line Yooz</option>
-    <option>New Prepaid Line</option>
-    <option>New Prepaid Line Old</option>
-    <option>Line Elite</option>
-    <option>A Line One Day On Us And A Day On You</option>
-  </select>
+  <input type="number" id="coins" placeholder="ادخل عدد الكوينات"><br>
+  <button onclick="calculate()">احسب</button>
 
-  <label for="minutes">Call Duration (minutes):</label>
-  <input type="number" id="minutes" placeholder="Enter minutes">
-
-  <label for="internet">Internet Usage (MB):</label>
-  <input type="number" id="internet" placeholder="Enter MB">
-
-  <button onclick="calculate()">Check</button>
-
-  <div id="callResult" class="result"></div>
-  <div id="netResult" class="result"></div>
+  <div id="result"></div>
 
   <script>
     function calculate() {
-      let minutes = parseFloat(document.getElementById("minutes").value);
-      let internet = parseFloat(document.getElementById("internet").value);
+      const coins = parseInt(document.getElementById("coins").value);
+      const resultDiv = document.getElementById("result");
 
-      let callDiv = document.getElementById("callResult");
-      let netDiv = document.getElementById("netResult");
-
-      // Check call
-      if (minutes >= 60) {
-        callDiv.className = "result green";
-        callDiv.innerText = "Call Time OK ✅ (60+ mins)";
-      } else {
-        callDiv.className = "result red";
-        callDiv.innerText = "Call Time Low ❌ (Less than 60 mins)";
+      if (isNaN(coins) || coins <= 0) {
+        resultDiv.innerHTML = "❗ الرجاء إدخال عدد كوينات صالح.";
+        resultDiv.className = "";
+        return;
       }
 
-      // Check internet
-      if (internet >= 1024) {
-        netDiv.className = "result green";
-        netDiv.innerText = "Internet Usage OK ✅ (1GB or more)";
-      } else {
-        netDiv.className = "result red";
-        netDiv.innerText = "Internet Usage Low ❌ (Less than 1GB)";
-      }
+      const seconds = Math.floor(coins / 2);
+      const minutes = (seconds / 60).toFixed(2);
+      const internetMB = Math.floor(coins / 4);
+      const smsCount = Math.floor(coins / 50);
+
+      // تحديد اللون حسب المدة وحجم النت
+      const callColor = minutes >= 60 ? 'green' : 'red';
+      const netColor = internetMB >= 1024 ? 'green' : 'red';
+
+      resultDiv.innerHTML = `
+        ⏱️ مدة المكالمة الممكنة: <span class="${callColor}">${seconds} ثانية (${minutes} دقيقة تقريباً)</span><br>
+        🌐 حجم الإنترنت الممكن: <span class="${netColor}">${internetMB} ميغابايت</span><br>
+        ✉️ عدد الرسائل الممكن إرسالها: ${smsCount} رسالة
+      `;
     }
   </script>
 
