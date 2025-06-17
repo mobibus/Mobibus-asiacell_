@@ -2,188 +2,137 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>موبي باص - أسياسيل</title>
+  <title>أسياسيل - صرفيات الخطوط</title>
   <style>
     body {
       font-family: 'Arial', sans-serif;
-      max-width: 480px;
-      margin: 20px auto;
-      padding: 180px 15px 15px;
-      background: #fff url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Asiacell_Logo.svg/2560px-Asiacell_Logo.svg.png') no-repeat center top;
-      background-size: 140px auto;
+      background: #fff;
+      color: #b30000;
+      padding: 20px;
+      max-width: 500px;
+      margin: auto;
+      border: 2px solid #b30000;
+      border-radius: 10px;
+    }
+    h1, h2 {
+      text-align: center;
       color: #cc0000;
-      border: 3px solid #cc0000;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(204,0,0,0.4);
-    }
-    h1 {
-      text-align: center;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-    h2 {
-      text-align: center;
-      font-weight: normal;
-      margin-top: 0;
-      margin-bottom: 5px;
-    }
-    h3.subtitle {
-      text-align: center;
-      font-weight: normal;
-      margin-top: 0;
-      margin-bottom: 25px;
-      font-size: 14px;
-      color: #990000;
-      font-style: italic;
     }
     label {
-      display: block;
       margin-top: 15px;
+      display: block;
       font-weight: bold;
-      font-size: 16px;
-      color: #cc0000;
     }
-    select, input[type="number"] {
+    select, input {
       width: 100%;
       padding: 10px;
+      font-size: 16px;
       margin-top: 6px;
-      font-size: 17px;
-      border: 2px solid #cc0000;
       border-radius: 6px;
-      transition: border-color 0.3s;
-    }
-    select:hover, input[type="number"]:hover, select:focus, input[type="number"]:focus {
-      border-color: #990000;
-      outline: none;
+      border: 1px solid #cc0000;
     }
     button {
-      margin-top: 25px;
-      width: 100%;
-      background: linear-gradient(135deg, #cc0000, #990000);
+      margin-top: 20px;
+      background: #cc0000;
       color: white;
-      padding: 12px 0;
-      font-size: 20px;
-      font-weight: bold;
+      padding: 10px;
       border: none;
-      border-radius: 8px;
+      width: 100%;
+      font-size: 18px;
+      border-radius: 6px;
       cursor: pointer;
-      box-shadow: 0 5px 8px rgba(204,0,0,0.6);
-      transition: background 0.3s;
-    }
-    button:hover {
-      background: linear-gradient(135deg, #990000, #cc0000);
     }
     #output {
-      margin-top: 25px;
+      margin-top: 20px;
+      padding: 15px;
       background: #fff0f0;
-      padding: 20px;
-      border: 2px solid #cc0000;
-      border-radius: 10px;
-      font-weight: bold;
-      color: #990000;
+      border: 1px solid #cc0000;
+      border-radius: 6px;
       white-space: pre-line;
-      min-height: 80px;
-      box-shadow: inset 0 0 10px #ffcccc;
     }
-    p.designer {
+    .footer {
       text-align: center;
-      font-size: 13px;
-      color: #aa0000;
-      margin-top: 45px;
+      font-size: 12px;
+      color: #880000;
+      margin-top: 40px;
       font-style: italic;
     }
   </style>
 </head>
 <body>
-
   <h1>أسياسيل</h1>
-  <h2>صرفيات جميع خطوط أسياسيل</h2>
-  <h3 class="subtitle">وادي فون – امتياز شركة أسياسيل</h3>
+  <h2>صرفيات أنواع خطوط أسياسيل</h2>
 
   <label for="lineType">اختر نوع الخط:</label>
   <select id="lineType">
-    <option value="يوز">خط اليوز (كوين)</option>
-    <option value="قديم">خط الدفع المسبق القديم</option>
-    <option value="جديد">خط الدفع المسبق الجديد</option>
-    <option value="ماس">خط الماس</option>
-    <option value="دينار">خط الدينار</option>
-    <option value="شباب">خط الشباب</option>
-    <option value="ايليت">خط إيليت</option>
-    <option value="يوم">خط يوم علينا ويوم عليك</option>
+    <option value="yooz">خط yooz</option>
+    <option value="other">خط الدفع المسبق القديم</option>
+    <option value="other">خط الدفع المسبق الجديد</option>
+    <option value="other">خط الشباب</option>
+    <option value="other">خط الماس</option>
+    <option value="other">خط يوم علينة ويوم عليك</option>
+    <option value="other">خط العتبات</option>
+    <option value="other">خط ايليت</option>
+    <option value="other">خطّ المؤسسات</option>
+    <option value="other">خط اي كنترول</option>
+    <option value="other">خط خلات</option>
+    <option value="other">خط الدينار (سليمانية)</option>
+    <option value="other">خط بزنز ماكس</option>
   </select>
 
-  <label for="amount">المبلغ (كوين أو دينار):</label>
-  <input type="number" id="amount" min="1" placeholder="اكتب المبلغ هنا" />
-
-  <label for="serviceType">نوع الخدمة:</label>
-  <select id="serviceType">
-    <option value="all">الكل</option>
-    <option value="call">الاتصال فقط</option>
-    <option value="internet">الإنترنت فقط</option>
-    <option value="sms">الرسائل فقط</option>
-  </select>
+  <label for="amount">المبلغ:</label>
+  <input type="number" id="amount" placeholder="أدخل المبلغ بالدينار أو الكوين" />
 
   <button onclick="calculate()">احسب الآن</button>
 
   <div id="output"></div>
 
-  <p class="designer">© تصميم frn.mohmed.wmobibus@Asiacell - موبي باص 2025</p>
+  <p class="footer">© تصميم. frn.mohmed.wmobibus@asiacell.com - موبي باص</p>
 
   <script>
-    function formatNumber(num) {
-      return Math.floor(num);
+    function formatNumber(n) {
+      return Math.floor(n);
     }
 
     function calculate() {
       const line = document.getElementById("lineType").value;
-      const service = document.getElementById("serviceType").value;
       const amount = parseFloat(document.getElementById("amount").value);
       const output = document.getElementById("output");
 
       if (isNaN(amount) || amount <= 0) {
-        output.textContent = "رجاءً أدخل مبلغ صالح.";
+        output.textContent = "الرجاء إدخال مبلغ صالح.";
         return;
       }
 
-      let callRate = 0;
-      const internetRate = 4;
-      const smsRate = 50;
+      let callRate, smsRate, internetRate;
 
-      if (line === "يوز") {
-        callRate = 2;
-      } else if (line === "قديم") {
-        callRate = 2.4;
-      } else if (line === "جديد") {
-        callRate = 4;
+      if (line === "yooz") {
+        callRate = 2; // كوين/ثانية
+        smsRate = 50;
+        internetRate = 4;
       } else {
-        callRate = 2;
+        callRate = 2; // دينار/ثانية
+        smsRate = 50;
+        internetRate = null; // ما مذكور
       }
 
-      const seconds = amount / callRate;
-      const minutes = seconds / 60;
-      const megabytes = amount / internetRate;
-      const sms = amount / smsRate;
+      let callSecs = amount / callRate;
+      let callMins = callSecs / 60;
+      let smsCount = amount / smsRate;
 
-      let internetText = "";
-      if (megabytes >= 1000) {
-        const gigabytes = megabytes / 1024;
-        internetText = `${formatNumber(gigabytes)} GB (${formatNumber(megabytes)} MB)`;
+      let netMB = internetRate ? (amount / internetRate) : 0;
+      let netText = "";
+      if (netMB >= 1024) {
+        netText = `${formatNumber(netMB / 1024)} GB (${formatNumber(netMB)} MB)`;
       } else {
-        internetText = `${formatNumber(megabytes)} MB`;
+        netText = `${formatNumber(netMB)} MB`;
       }
 
-      let result = "";
-
-      if (service === "all" || service === "call")
-        result += `📞 الاتصال: ${formatNumber(minutes)} دقيقة\n`;
-      if (service === "all" || service === "internet")
-        result += `🌐 الإنترنت: ${internetText}\n`;
-      if (service === "all" || service === "sms")
-        result += `✉️ الرسائل: ${formatNumber(sms)} رسالة`;
+      let result = `📞 الاتصال: ${formatNumber(callMins)} دقيقة\n✉️ الرسائل: ${formatNumber(smsCount)} رسالة`;
+      if (internetRate) result += `\n🌐 الإنترنت: ${netText}`;
 
       output.textContent = result;
     }
   </script>
-
 </body>
 </html>
