@@ -1,177 +1,107 @@
-‏<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>موبي باص - أسياسيل</title>
+  <meta charset="UTF-8">
+  <title>Mobibus - Asiacell</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      max-width: 480px;
-      margin: 20px auto;
-      padding: 180px 15px 15px;
-      background: #fff url('https://cdn.glitch.global/xxx/asiacell-logo.png?v=xxx') no-repeat center top;
-      background-size: 150px auto;
-      color: #cc0000;
-      border: 2px solid #cc0000;
-      border-radius: 10px;
-    }
-    h1 {
-      text-align: center;
-      color: #cc0000;
-      margin-bottom: 5px;
+      background-color: #f2f2f2;
+      padding: 20px;
     }
     h2 {
-      text-align: center;
-      font-weight: normal;
-      margin-top: 0;
-      margin-bottom: 25px;
-      color: #990000;
+      color: #333;
     }
     label {
+      margin-top: 10px;
       display: block;
-      margin-top: 15px;
       font-weight: bold;
-      color: #cc0000;
     }
-    select, input[type="number"] {
-      width: 100%;
+    select, input {
       padding: 8px;
       margin-top: 5px;
-      font-size: 16px;
-      border: 1px solid #cc0000;
-      border-radius: 5px;
-      color: #990000;
-      background-color: #fff0f0;
+      width: 100%;
+      max-width: 300px;
     }
     button {
-      margin-top: 20px;
-      width: 100%;
-      background-color: #cc0000;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #007bff;
       color: white;
-      padding: 10px;
-      font-size: 18px;
       border: none;
-      border-radius: 5px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
     }
-    button:hover {
-      background-color: #990000;
-    }
-    #output {
+    .result {
       margin-top: 20px;
-      background: #fee;
       padding: 15px;
-      border: 1px solid #cc0000;
       border-radius: 5px;
       font-weight: bold;
-      color: #990000;
-      white-space: pre-line;
-      min-height: 70px;
+      max-width: 400px;
     }
-    p.designer {
-      text-align: center;
-      font-size: 13px;
-      color: #aaa;
-      margin-top: 40px;
+    .green {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    .red {
+      background-color: #f8d7da;
+      color: #721c24;
     }
   </style>
 </head>
 <body>
 
-  <h1>أسياسيل</h1>
-  <h2>صرفيات جميع خطوط أسياسيل</h2>
+  <h2>Mobibus - Asiacell Usage Checker</h2>
 
-  <label for="lineType">اختر نوع الخط:</label>
-  <select id="lineType">
-    <select id="lineType">
-  <option>Almas</option>
-  <option>Line Diner</option>
-  <option>Line Youth</option>
-  <option>Line Yooz</option>
-  <option>New Prepaid Line</option>
-  <option>New Prepaid Line Old</option>
-  <option>Line Elite</option>
-  <option>A Line One Day On Us And A Day On You</option>
-</select>ا ويوم عليك</option>
+  <label for="line">Choose Line Type:</label>
+  <select id="line">
+    <option>Almas</option>
+    <option>Line Diner</option>
+    <option>Line Youth</option>
+    <option>Line Yooz</option>
+    <option>New Prepaid Line</option>
+    <option>New Prepaid Line Old</option>
+    <option>Line Elite</option>
+    <option>A Line One Day On Us And A Day On You</option>
   </select>
 
-  <label for="amount">المبلغ (كوين أو دينار):</label>
-  <input type="number" id="amount" min="0" placeholder="اكتب المبلغ هنا" />
+  <label for="minutes">Call Duration (minutes):</label>
+  <input type="number" id="minutes" placeholder="Enter minutes">
 
-  <label for="serviceType">نوع الخدمة:</label>
-  <select id="serviceType">
-    <option value="all">الكل</option>
-    <option value="call">الاتصال فقط</option>
-    <option value="internet">الإنترنت فقط</option>
-    <option value="sms">الرسائل فقط</option>
-  </select>
+  <label for="internet">Internet Usage (MB):</label>
+  <input type="number" id="internet" placeholder="Enter MB">
 
-  <button onclick="calculate()">احسب الآن</button>
+  <button onclick="calculate()">Check</button>
 
-  <div id="output"></div>
-
-  <p class="designer">© تصميم frn.mohmed.wmobibus@Asiacell - موبي باص 2025</p>
+  <div id="callResult" class="result"></div>
+  <div id="netResult" class="result"></div>
 
   <script>
     function calculate() {
-      const line = document.getElementById("lineType").value;
-      const service = document.getElementById("serviceType").value;
-      const amount = parseFloat(document.getElementById("amount").value);
-      const output = document.getElementById("output");
+      let minutes = parseFloat(document.getElementById("minutes").value);
+      let internet = parseFloat(document.getElementById("internet").value);
 
-      if (isNaN(amount) || amount <= 0) {
-        output.textContent = "رجاءً أدخل مبلغ صالح.";
-        return;
-      }
+      let callDiv = document.getElementById("callResult");
+      let netDiv = document.getElementById("netResult");
 
-      let callRate = 0;
-      const internetRate = 4; // كوين لكل 1 MB
-      const smsRate = 50;     // كوين لكل رسالة
-
-      if (line === "يوز") {
-        callRate = 2; // كوين/ثانية
-      } else if (line === "قديم") {
-        callRate = 2.4;
-      } else if (line === "جديد") {
-        callRate = 4;
+      // Check call
+      if (minutes >= 60) {
+        callDiv.className = "result green";
+        callDiv.innerText = "Call Time OK ✅ (60+ mins)";
       } else {
-        callRate = 2;
+        callDiv.className = "result red";
+        callDiv.innerText = "Call Time Low ❌ (Less than 60 mins)";
       }
 
-      const seconds = amount / callRate;
-      const minutes = seconds / 60;
-      const megabytes = amount / internetRate;
-      const sms = amount / smsRate;
-
-      // تحويل الميغابايت إلى جيجابايت لو وصل 1024 أو أكثر
-      let internetText = "";
-      if (megabytes >= 1000) {
-        const gigabytes = megabytes / 1024;
-        internetText = `${gigabytes.toFixed(2)} GB`;
+      // Check internet
+      if (internet >= 1024) {
+        netDiv.className = "result green";
+        netDiv.innerText = "Internet Usage OK ✅ (1GB or more)";
       } else {
-        internetText = `${Math.floor(megabytes)} MB`;
+        netDiv.className = "result red";
+        netDiv.innerText = "Internet Usage Low ❌ (Less than 1GB)";
       }
-
-      let result = "";
-
-      if (service === "all" || service === "call")
-        result += `📞 الاتصال: ${Math.floor(minutes)} دقيقة\n`;
-      if (service === "all" || service === "internet")
-        result += `🌐 الإنترنت: ${internetText}\n`;
-      if (service === "all" || service === "sms")
-        result += `✉️ الرسائل: ${Math.floor(sms)} رسالة`;
-
-      output.textContent = result;
     }
   </script>
 
 </body>
 </html>
-‏‏<select id="lineType">
-  <option value="almas">Almas</option>
-  <option value="diner">Line Diner</option>
-  <option value="youth">Line Youth</option>
-  <option value="yooz">Line Yooz</option>
-  ...
-</select>
