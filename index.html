@@ -1,1 +1,158 @@
+‏<!DOCTYPE html>
+‏<html lang="ar" dir="rtl">
+‏<head>
+‏  <meta charset="UTF-8" />
+‏  <title>موبي باص - أسياسيل</title>
+‏  <style>
+‏    body {
+‏      font-family: Arial, sans-serif;
+‏      max-width: 480px;
+‏      margin: 20px auto;
+‏      padding: 180px 15px 15px;
+‏      background: #fff url('https://cdn.glitch.global/xxx/asiacell-logo.png?v=xxx') no-repeat center top;
+‏      background-size: 150px auto;
+‏      color: #333;
+‏      border: 2px solid #cc0000;
+‏      border-radius: 10px;
+    }
+‏    h1 {
+‏      text-align: center;
+‏      color: #cc0000;
+    }
+‏    h2 {
+‏      text-align: center;
+‏      font-weight: normal;
+‏      margin-top: 0;
+‏      margin-bottom: 20px;
+    }
+‏    label {
+‏      display: block;
+‏      margin-top: 15px;
+‏      font-weight: bold;
+    }
+‏    select, input[type="number"] {
+‏      width: 100%;
+‏      padding: 8px;
+‏      margin-top: 5px;
+‏      font-size: 16px;
+‏      border: 1px solid #cc0000;
+‏      border-radius: 5px;
+    }
+‏    button {
+‏      margin-top: 20px;
+‏      width: 100%;
+‏      background-color: #cc0000;
+‏      color: white;
+‏      padding: 10px;
+‏      font-size: 18px;
+‏      border: none;
+‏      border-radius: 5px;
+‏      cursor: pointer;
+    }
+‏    button:hover {
+‏      background-color: #990000;
+    }
+‏    #output {
+‏      margin-top: 20px;
+‏      background: #fee;
+‏      padding: 15px;
+‏      border: 1px solid #cc0000;
+‏      border-radius: 5px;
+‏      font-weight: bold;
+‏      color: #990000;
+‏      white-space: pre-line;
+    }
+‏    p.designer {
+‏      text-align: center;
+‏      font-size: 13px;
+‏      color: #aaa;
+‏      margin-top: 40px;
+    }
+‏  </style>
+‏</head>
+‏<body>
 
+‏  <h1>أسياسيل</h1>
+‏  <h2>صرفيات جميع خطوط أسياسيل</h2>
+
+‏  <label for="lineType">اختر نوع الخط:</label>
+‏  <select id="lineType">
+‏    <option value="يوز">خط اليوز (كوين)</option>
+‏    <option value="قديم">دفع مسبق قديم</option>
+‏    <option value="جديد">دفع مسبق جديد</option>
+‏    <option value="ماس">خط الماس</option>
+‏    <option value="دينار">خط الدينار</option>
+‏    <option value="شباب">خط الشباب</option>
+‏    <option value="ايليت">خط ايليت</option>
+‏    <option value="يوم">خط يوم علينا ويوم عليك</option>
+‏  </select>
+
+‏  <label for="amount">المبلغ (كوين أو دينار):</label>
+‏  <input type="number" id="amount" min="0" placeholder="اكتب المبلغ هنا" />
+
+‏  <label for="serviceType">نوع الخدمة:</label>
+‏  <select id="serviceType">
+‏    <option value="all">الكل</option>
+‏    <option value="call">الاتصال فقط</option>
+‏    <option value="internet">الإنترنت فقط</option>
+‏    <option value="sms">الرسائل فقط</option>
+‏  </select>
+
+‏  <button onclick="calculate()">احسب الآن</button>
+
+‏  <div id="output"></div>
+
+‏  <p class="designer">© تصميم frn.mohmed.wmobibus@Asiacell - موبي باص 2025</p>
+
+‏  <script>
+‏    function formatNumber(num) {
+‏      return Math.floor(num); // بدون أرقام عشرية
+    }
+
+‏    function calculate() {
+‏      const line = document.getElementById("lineType").value;
+‏      const service = document.getElementById("serviceType").value;
+‏      const amount = parseFloat(document.getElementById("amount").value);
+‏      const output = document.getElementById("output");
+
+‏      if (isNaN(amount) || amount <= 0) {
+‏        output.textContent = "رجاءً أدخل مبلغ صالح.";
+‏        return;
+      }
+
+‏      let callRate = 0, unit = "دينار";
+‏      const internetRate = 4; // كوين لكل 1 MB
+‏      const smsRate = 50;     // كوين لكل رسالة
+
+‏      if (line === "يوز") {
+‏        callRate = 2; // كوين/ثانية
+‏        unit = "كوين";
+‏      } else if (line === "قديم") {
+‏        callRate = 2.4;
+‏      } else if (line === "جديد") {
+‏        callRate = 4;
+‏      } else {
+‏        callRate = 2;
+      }
+
+‏      const seconds = amount / callRate;
+‏      const minutes = seconds / 60;
+‏      const megabytes = amount / internetRate;
+‏      const gigabytes = megabytes / 1024;
+‏      const sms = amount / smsRate;
+
+‏      let result = "";
+
+‏      if (service === "all" || service === "call")
+‏        result += `📞 الاتصال: ${formatNumber(minutes)} دقيقة\n`;
+‏      if (service === "all" || service === "internet")
+‏        result += `🌐 الإنترنت: ${formatNumber(megabytes)} MB (${formatNumber(gigabytes)} GB)\n`;
+‏      if (service === "all" || service === "sms")
+‏        result += `✉️ الرسائل: ${formatNumber(sms)} رسالة`;
+
+‏      output.textContent = result;
+    }
+‏  </script>
+
+‏</body>
+‏</html>
