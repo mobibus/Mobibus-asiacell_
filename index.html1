@@ -136,3 +136,23 @@
   </script>
 </body>
 </html>
+body {
+  background-color: #b30000;
+  color: #fff;
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
+  /* احذف الخلفية البيضاء */
+  background: none;
+  border: 2px solid white;
+  border-radius: 10px;
+  margin-top: 40px;
+  color: white;
+}
