@@ -1,76 +1,85 @@
  <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <title>أسياسيل - صرفيات الخطوط</title>
+  <meta charset="UTF-8">
+  <title>أسياسيل - كيفية احتساب صرف الخطوط أسياسيل</title>
   <style>
     body {
       font-family: 'Arial', sans-serif;
-      background: #fff;
-      color: #b30000;
-      padding: 20px;
-      max-width: 500px;
-      margin: auto;
-      border: 2px solid #b30000;
-      border-radius: 10px;
+      max-width: 480px;
+      margin: 20px auto;
+      padding: 140px 15px 15px;
+      background: #fff url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Asiacell_Logo.svg/2560px-Asiacell_Logo.svg.png') no-repeat center top;
+      background-size: 140px auto;
+      color: #cc0000;
+      border: 3px solid #cc0000;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(204,0,0,0.4);
     }
     h1, h2 {
       text-align: center;
-      color: #cc0000;
+      margin: 5px 0;
     }
     label {
-      margin-top: 15px;
       display: block;
+      margin-top: 15px;
       font-weight: bold;
+      font-size: 16px;
+      color: #cc0000;
     }
-    select, input {
+    select, input[type="number"] {
       width: 100%;
       padding: 10px;
-      font-size: 16px;
       margin-top: 6px;
+      font-size: 17px;
+      border: 2px solid #cc0000;
       border-radius: 6px;
-      border: 1px solid #cc0000;
     }
     button {
-      margin-top: 20px;
-      background: #cc0000;
-      color: white;
-      padding: 10px;
-      border: none;
+      margin-top: 25px;
       width: 100%;
-      font-size: 18px;
-      border-radius: 6px;
+      background: linear-gradient(135deg, #cc0000, #990000);
+      color: white;
+      padding: 12px 0;
+      font-size: 20px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
       cursor: pointer;
     }
     #output {
-      margin-top: 20px;
-      padding: 15px;
+      margin-top: 25px;
       background: #fff0f0;
-      border: 1px solid #cc0000;
-      border-radius: 6px;
+      padding: 20px;
+      border: 2px solid #cc0000;
+      border-radius: 10px;
+      font-weight: bold;
+      color: #990000;
       white-space: pre-line;
+      min-height: 80px;
     }
-    .footer {
+    p.footer {
       text-align: center;
-      font-size: 12px;
-      color: #880000;
-      margin-top: 40px;
+      font-size: 13px;
+      color: #aa0000;
+      margin-top: 30px;
       font-style: italic;
     }
   </style>
 </head>
 <body>
-  <h1>أسياسيل</h1>
-  <h2>صرفيات أنواع خطوط أسياسيل</h2>
 
-  <label for="lineType">اختر نوع الخط:</label>
+  <h1>أسياسيل</h1>
+  <h2>كيفية احتساب صرف الخطوط أسياسيل</h2>
+
+  <label for="lineType">نوع الخط:</label>
   <select id="lineType">
     <option value="yooz">خط yooz</option>
+    <option value="yom">خط يوم علينة ويوم عليك</option>
     <option value="other">خط الدفع المسبق القديم</option>
     <option value="other">خط الدفع المسبق الجديد</option>
     <option value="other">خط الشباب</option>
     <option value="other">خط الماس</option>
-    <option value="other">خط يوم علينة ويوم عليك</option>
     <option value="other">خط العتبات</option>
     <option value="other">خط ايليت</option>
     <option value="other">خطّ المؤسسات</option>
@@ -80,56 +89,71 @@
     <option value="other">خط بزنز ماكس</option>
   </select>
 
-  <label for="amount">المبلغ:</label>
-  <input type="number" id="amount" placeholder="أدخل المبلغ بالدينار أو الكوين" />
+  <label for="amount">المبلغ (كوين أو دينار):</label>
+  <input type="number" id="amount" min="1" placeholder="اكتب المبلغ هنا" />
+
+  <label for="serviceType">نوع الخدمة:</label>
+  <select id="serviceType">
+    <option value="all">الكل</option>
+    <option value="call">الاتصال فقط</option>
+    <option value="internet">الإنترنت فقط</option>
+    <option value="sms">الرسائل فقط</option>
+  </select>
 
   <button onclick="calculate()">احسب الآن</button>
 
   <div id="output"></div>
 
-  <p class="footer">© تصميم. frn.mohmed.wmobibus@asiacell.com - موبي باص</p>
+  <p class="footer">© تصميم محمد جواد - أسياسيل تجمعنه سوة</p>
 
   <script>
-    function formatNumber(n) {
-      return Math.floor(n);
+    function format(num) {
+      return Math.floor(num);
     }
 
     function calculate() {
       const line = document.getElementById("lineType").value;
       const amount = parseFloat(document.getElementById("amount").value);
+      const service = document.getElementById("serviceType").value;
       const output = document.getElementById("output");
 
       if (isNaN(amount) || amount <= 0) {
-        output.textContent = "الرجاء إدخال مبلغ صالح.";
+        output.textContent = "يرجى إدخال مبلغ صالح.";
         return;
       }
 
-      let callRate, smsRate, internetRate;
+      let callRate = 2.4;
+      let smsRate = 50;
+      let internetRate = 4;
 
-      if (line === "yooz") {
-        callRate = 2; // كوين/ثانية
+      if (line === "yooz" || line === "yom") {
+        callRate = 2;
         smsRate = 50;
-        internetRate = 4;
       } else {
-        callRate = 2; // دينار/ثانية
+        callRate = 2.4;
         smsRate = 50;
-        internetRate = null; // ما مذكور
       }
 
-      let callSecs = amount / callRate;
-      let callMins = callSecs / 60;
-      let smsCount = amount / smsRate;
+      const seconds = amount / callRate;
+      const minutes = seconds / 60;
+      const smsCount = amount / smsRate;
+      const megabytes = amount / internetRate;
+      const gigabytes = megabytes / 1024;
 
-      let netMB = internetRate ? (amount / internetRate) : 0;
-      let netText = "";
-      if (netMB >= 1024) {
-        netText = `${formatNumber(netMB / 1024)} GB (${formatNumber(netMB)} MB)`;
+      let internetDisplay = "";
+      if (megabytes >= 1000) {
+        internetDisplay = `${format(gigabytes)} GB`;
       } else {
-        netText = `${formatNumber(netMB)} MB`;
+        internetDisplay = `${format(megabytes)} MB`;
       }
 
-      let result = `📞 الاتصال: ${formatNumber(callMins)} دقيقة\n✉️ الرسائل: ${formatNumber(smsCount)} رسالة`;
-      if (internetRate) result += `\n🌐 الإنترنت: ${netText}`;
+      let result = "";
+      if (service === "all" || service === "call")
+        result += `📞 الاتصال: ${format(minutes)} دقيقة\n`;
+      if (service === "all" || service === "internet")
+        result += `🌐 الإنترنت: ${internetDisplay}\n`;
+      if (service === "all" || service === "sms")
+        result += `✉️ الرسائل: ${format(smsCount)} رسالة`;
 
       output.textContent = result;
     }
