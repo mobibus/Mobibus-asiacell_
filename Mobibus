@@ -74,7 +74,7 @@
 
   <label for="lineType">نوع الخط:</label>
   <select id="lineType">
-    <option value="yooz">خط Red yooz</option>
+    <option value="yooz">خط  yooz</option>
     <option value="yom">خط يوم علينة ويوم عليك</option>
     <option value="other">خط الدفع المسبق القديم</option>
     <option value="other">خط الدفع المسبق الجديد</option>
@@ -226,4 +226,5 @@
   background: linear-gradient(135deg, #ff0000, #b30000);
   box-shadow: 0 5px 15px rgba(204,0,0,0.4);
 }
-</style>
+</style> 
+تحياتي فريق موبي باص
