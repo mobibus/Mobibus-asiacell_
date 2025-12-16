@@ -161,3 +161,69 @@
   </script>
 </body>
 </html>
+
+<label for="newLine" class="modern-label">أضف خط جديد:</label>
+<input type="text" id="newLine" placeholder="اكتب اسم الخط هنا" class="modern-input"/>
+<button onclick="addLine()" class="modern-button">أضف الخط</button>
+
+<script>
+  function addLine() {
+    const lineName = document.getElementById('newLine').value.trim();
+    const lineSelect = document.getElementById('lineType');
+    if(lineName) {
+      const option = document.createElement('option');
+      option.value = lineName.toLowerCase().replace(/\s+/g, '');
+      option.textContent = lineName;
+      lineSelect.appendChild(option);
+      document.getElementById('newLine').value = '';
+      alert('تمت إضافة الخط: ' + lineName);
+    } else {
+      alert('يرجى إدخال اسم الخط!');
+    }
+  }
+</script>
+
+<style>
+.modern-label {
+  display: block;
+  font-weight: bold;
+  margin-top: 20px;
+  font-size: 16px;
+  color: #b30000;
+}
+
+.modern-input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  font-size: 16px;
+  border: 2px solid #b30000;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.modern-input:focus {
+  border-color: #ff0000;
+  box-shadow: 0 0 10px rgba(255,0,0,0.5);
+  outline: none;
+}
+
+.modern-button {
+  margin-top: 15px;
+  width: 100%;
+  padding: 12px 0;
+  font-size: 18px;
+  font-weight: bold;
+  background: linear-gradient(135deg, #cc0000, #990000);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.modern-button:hover {
+  background: linear-gradient(135deg, #ff0000, #b30000);
+  box-shadow: 0 5px 15px rgba(204,0,0,0.4);
+}
+</style>
