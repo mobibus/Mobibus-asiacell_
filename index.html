@@ -161,8 +161,94 @@
         result += `🌐 الإنترنت: ${internetDisplay}\n`;
       if (service === "all" || service === "sms")
         result += `✉️ الرسائل: ${format(smsCount)} رسالة`;
+<section class="offers">
+  <h2>اختَر الباقة المناسبة</h2>
 
-      output.textContent = result;
+  <div class="grid">
+
+    <div class="card">
+      <span class="num">1</span>
+      <h3>مكالمات أكثر</h3>
+      <p>75 دقيقة + 100 رسالة</p>
+      <p>20 دقيقة + 2.5 GB</p>
+      <p>50 دقيقة + 1.5 GB</p>
+    </div>
+
+    <div class="card">
+      <span class="num">2</span>
+      <h3>مكالمات أكثر</h3>
+      <p>150 دقيقة + 150 رسالة</p>
+      <p>60 دقيقة + 4 GB</p>
+      <p>100 دقيقة + 3 GB</p>
+      <div class="icons">
+        <i class="fab fa-whatsapp"></i>
+        <i class="fab fa-facebook"></i>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="num">3</span>
+      <h3>مكالمات أكثر</h3>
+      <p>250 دقيقة + 200 رسالة</p>
+      <p>75 دقيقة + 8 GB</p>
+      <p>150 دقيقة + 6 GB</p>
+      <div class="icons">
+        <i class="fab fa-snapchat"></i>
+        <i class="fab fa-facebook"></i>
+        <i class="fab fa-instagram"></i>
+        <i class="fab fa-whatsapp"></i>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="num">4</span>
+      <h3>مكالمات أكثر</h3>
+      <p>450 دقيقة + 200 رسالة</p>
+      <p>100 دقيقة + 11 GB</p>
+      <p>250 دقيقة + 7.5 GB</p>
+      <div class="icons">
+        <i class="fab fa-snapchat"></i>
+        <i class="fab fa-facebook"></i>
+        <i class="fab fa-instagram"></i>
+        <i class="fab fa-whatsapp"></i>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="num">5</span>
+      <h3>مكالمات أكثر</h3>
+      <p>700 دقيقة + 500 رسالة</p>
+      <p>100 دقيقة + 18 GB</p>
+      <p>400 دقيقة + 10 GB</p>
+      <div class="icons">
+        <i class="fab fa-snapchat"></i>
+        <i class="fab fa-facebook"></i>
+        <i class="fab fa-instagram"></i>
+        <i class="fab fa-whatsapp"></i>
+        <i class="fab fa-tiktok"></i>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="num">6</span>
+      <h3>مكالمات أكثر</h3>
+      <p>900 دقيقة + 750 رسالة</p>
+      <p>100 دقيقة + 27 GB</p>
+      <p>500 دقيقة + 15 GB</p>
+      <div class="icons">
+        <i class="fab fa-snapchat"></i>
+        <i class="fab fa-facebook"></i>
+        <i class="fab fa-instagram"></i>
+        <i class="fab fa-whatsapp"></i>
+        <i class="fab fa-tiktok"></i>
+        <i class="fab fa-youtube"></i>
+      </div>
+    </div>
+
+  </div>
+</section>
+   
+     output.textContent = result;
     }
   </script>
 </body>
