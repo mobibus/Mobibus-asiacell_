@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>أرقام مميزة - Mobibus</title>
-     
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -73,4 +73,139 @@
             outline: none;
             transition: all 0.3s ease;
             text-align: center;
-            box-shadow: 0
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 15px var(--border-glow);
+        }
+
+        /* شبكة الأرقام */
+        .numbers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .number-card {
+            background-color: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .number-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            border-color: var(--accent-blue);
+        }
+
+        .phone-number {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-light);
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            direction: ltr;
+        }
+
+        .operator {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            background-color: rgba(33, 158, 188, 0.2);
+            color: var(--accent-blue);
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 1.3rem;
+            color: var(--accent-gold);
+            font-weight: 600;
+        }
+
+        .no-results {
+            text-align: center;
+            color: var(--text-muted);
+            grid-column: 1 / -1;
+            padding: 40px;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Mobibus</h1>
+            <p>منصتك لاختيار الأرقام المميزة لجميع الشبكات</p>
+        </header>
+
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-input" placeholder="ابحث عن رقم معين أو شبكة...">
+        </div>
+
+        <div class="numbers-grid" id="numbersGrid">
+            </div>
+    </div>
+
+    <script>
+        // مصفوفة تحتوي على البيانات (يمكنك التعديل عليها وإضافة أرقامك)
+        const phoneNumbers = [
+            { number: "0770 123 4567", operator: "آسيا سيل", price: "$150" },
+            { number: "0780 999 8888", operator: "زين العراق", price: "$400" },
+            { number: "0750 111 2222", operator: "كورك", price: "$250" },
+            { number: "0771 555 6666", operator: "آسيا سيل", price: "$300" },
+            { number: "0781 000 0000", operator: "زين العراق", price: "$500" }
+        ];
+
+        const numbersGrid = document.getElementById('numbersGrid');
+        const searchInput = document.getElementById('searchInput');
+
+        // دالة لعرض الأرقام في الصفحة
+        function displayNumbers(data) {
+            numbersGrid.innerHTML = '';
+            
+            if (data.length === 0) {
+                numbersGrid.innerHTML = '<div class="no-results">عذراً، لم يتم العثور على أرقام مطابقة.</div>';
+                return;
+            }
+
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'number-card';
+                card.innerHTML = `
+                    <div class="phone-number">${item.number}</div>
+                    <div class="operator">${item.operator}</div>
+                    <div class="price">${item.price}</div>
+                `;
+                numbersGrid.appendChild(card);
+            });
+        }
+
+        // تفعيل فلتر البحث عند الكتابة
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase().replace(/\s+/g, '');
+            
+            const filtered = phoneNumbers.filter(item => {
+                const cleanNumber = item.number.replace(/\s+/g, '');
+                const matchesNumber = cleanNumber.includes(searchTerm);
+                const matchesOperator = item.operator.toLowerCase().includes(searchTerm);
+                return matchesNumber || matchesOperator;
+            });
+            
+            displayNumbers(filtered);
+        });
+
+        // عرض الأرقام لأول مرة عند تحميل الصفحة
+        displayNumbers(phoneNumbers);
+    </script>
+
+</body>
+</html>
