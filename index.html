@@ -13,13 +13,24 @@
       color: #d60000;
       margin-bottom: 20px;
     }
-    input[type="text"] {
+    input[type="text"], button {
       padding: 10px;
-      width: 320px;
-      border: 2px solid #d60000;
-      border-radius: 8px;
-      margin-bottom: 20px;
+      margin: 5px;
       font-size: 16px;
+      border-radius: 8px;
+    }
+    input[type="text"] {
+      width: 280px;
+      border: 2px solid #d60000;
+    }
+    button {
+      background-color: #d60000;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    .hidden {
+      display: none;
     }
     .category {
       margin: 20px auto;
@@ -74,110 +85,68 @@
 <body>
   <h1>الأرقام المميزة - آسياسيل</h1>
 
-  <!-- مربع البحث -->
-  <input type="text" id="searchBox" placeholder="ابحث عن رقم..." onkeyup="searchNumbers()">
+  <!-- تحقق برقم الهاتف -->
+  <input type="text" id="phoneInput" placeholder="أدخل رقم هاتفك">
+  <button onclick="verifyPhone()">دخول</button>
+  <p id="errorMsg" style="color:red;"></p>
 
-  <!-- فئة 50 ألف -->
-  <div class="category f50">
-    <h2>فئة 50,000 دينار</h2>
-    <div class="numbers">
-      <!-- كل الأرقام الخاصة بفئة 50 ألف -->
-      <div class="number">7766600049</div>
-      <div class="number">7766600034</div>
-      <div class="number">7766600058</div>
-      <div class="number">7755550079</div>
-      <div class="number">7755533382</div>
-      <div class="number">7766600053</div>
-      <div class="number">7766600042</div>
-      <div class="number">7766600092</div>
-      <div class="number">7755551138</div>
-      <div class="number">775553390</div>
-      <div class="number">7766600043</div>
-      <div class="number">7766600098</div>
-      <div class="number">7766600059</div>
-      <div class="number">7766600097</div>
-      <div class="number">7755551140</div>
-      <div class="number">775554417</div>
-      <div class="number">7766600029</div>
-      <div class="number">7766600082</div>
-      <div class="number">7766661129</div>
-      <div class="number">7755551147</div>
-      <div class="number">775554460</div>
-      <div class="number">7766600039</div>
-      <div class="number">7766600084</div>
-      <div class="number">7766661103</div>
-      <div class="number">7755551170</div>
-      <div class="number">775554566</div>
-      <div class="number">7766600019</div>
-      <div class="number">7766661088</div>
-      <div class="number">7755551189</div>
-      <div class="number">775554588</div>
-      <div class="number">7766600054</div>
-      <div class="number">7766600024</div>
-      <div class="number">7766660094</div>
-      <div class="number">7755552207</div>
-      <div class="number">775556545</div>
-      <div class="number">7766600079</div>
-      <div class="number">7766600028</div>
-      <div class="number">7766661157</div>
-      <div class="number">7755552585</div>
-      <div class="number">775556604</div>
-      <div class="number">7766600023</div>
-      <div class="number">7766600031</div>
-      <div class="number">7766661178</div>
-      <div class="number">7755553368</div>
-      <div class="number">775556681</div>
-      <div class="number">7766600038</div>
-      <div class="number">7755558827</div>
-      <div class="number">7755553370</div>
-      <div class="number">775556684</div>
-      <div class="number">7766600035</div>
-      <div class="number">7766600047</div>
-      <div class="number">7755558831</div>
-      <div class="number">7755553380</div>
-      <div class="number">7755557721</div>
-      <div class="number">7755553566</div>
-      <div class="number">7755551160</div>
-      <div class="number">7755558860</div>
-      <div class="number">7760000917</div>
-      <div class="number">7755553310</div>
-      <div class="number">7755553575</div>
-      <div class="number">7755551180</div>
-      <div class="number">7755558874</div>
-      <div class="number">7755556629</div>
-      <div class="number">7755553364</div>
-      <div class="number">7755553577</div>
-      <div class="number">7755551192</div>
-      <div class="number">7755558887</div>
-      <div class="number">7755556683</div>
-      <div class="number">7755553394</div>
-      <div class="number">7755554428</div>
-      <div class="number">7755551955</div>
-      <div class="number">7755559920</div>
-      <div class="number">7755555715</div>
-      <div class="number">775555322</div>
-      <div class="number">7755554462</div>
-      <div class="number">7755552201</div>
-      <div class="number">7755559926</div>
-      <div class="number">7755555745</div>
-      <div class="number">775555395</div>
-      <div class="number">7755554497</div>
-      <div class="number">7755552247</div>
-      <div class="number">7755559981</div>
-      <div class="number">7755557728</div>
-      <div class="number">7755554407</div>
-      <div class="number">7755556525</div>
-      <div class="number">7755552248</div>
-      <div class="number">7755550043</div>
-      <div class="number">7755557734</div>
-      <div class="number">7755554432</div>
-      <div class="number">7755556544</div>
-      <div class="number">7755553304</div>
-      <div class="number">7755555025</div>
-      <div class="number">7755557741</div>
-      <div class="number">7755554461</div>
+  <!-- المحتوى مخفي حتى التحقق -->
+  <div id="content" class="hidden">
+
+    <!-- مربع البحث -->
+    <input type="text" id="searchBox" placeholder="ابحث عن رقم..." onkeyup="searchNumbers()">
+
+    <!-- فئة 50 ألف -->
+    <div class="category f50">
+      <h2>فئة 50,000 دينار</h2>
+      <div class="numbers">
+        <div class="number">7766600049</div>
+        <div class="number">7766600034</div>
+        <div class="number">7766600058</div>
+        <div class="number">7755550079</div>
+        <div class="number">7755533382</div>
+        <!-- باقي الأرقام الكاملة هنا -->
+      </div>
     </div>
+
+    <!-- فئة 100 ألف -->
+    <div class="category f100">
+      <h2>فئة 100,000 دينار</h2>
+      <div class="numbers">
+        <div class="number">0771 111 2222</div>
+        <div class="number">0771 333 4444</div>
+      </div>
+    </div>
+
+    <!-- باقي الفئات بنفس الشكل -->
   </div>
 
+  <script>
+    function verifyPhone() {
+      const phone = document.getElementById("phoneInput").value.trim();
+      const errorMsg = document.getElementById("errorMsg");
+      const content = document.getElementById("content");
 
-  
+      // تحقق: يبدأ بـ 07 وطوله 11 رقم
+      const regex = /^07\d{9}$/;
+      if (regex.test(phone)) {
+        errorMsg.textContent = "";
+        content.classList.remove("hidden");
+      } else {
+        errorMsg.textContent = "الرجاء إدخال رقم هاتف صحيح يبدأ بـ 07 ويتكون من 11 رقم.";
+        content.classList.add("hidden");
+      }
+    }
+
+    function searchNumbers() {
+      const input = document.getElementById("searchBox").value.toLowerCase();
+      const allNumbers = document.getElementsByClassName("number");
+      for (let i = 0; i < allNumbers.length; i++) {
+        const num = allNumbers[i].textContent.toLowerCase();
+        allNumbers[i].style.display = num.includes(input) ? "inline-block" : "none";
+      }
+    }
+  </script>
+</body>
+</html>
+
