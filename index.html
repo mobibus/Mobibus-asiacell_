@@ -20,6 +20,11 @@
     }
     header img {
       width: 220px;
+      animation: fadeInDown 1.5s ease;
+    }
+    @keyframes fadeInDown {
+      from {opacity: 0; transform: translateY(-30px);}
+      to {opacity: 1; transform: translateY(0);}
     }
     h1 {
       text-align: center;
@@ -87,11 +92,12 @@
     <div class="card f50k">
       <h2>فئة 50,000 دينار</h2>
       <ul class="numbers">
-        <li>0770 500 0001</li>
-        <li>0770 500 0002</li>
-        <li>0770 500 0003</li>
-        <li>0770 500 0004</li>
-        <li>0770 500 0005</li>
+        <li>7766600049</li>
+        <li>7766600034</li>
+        <li>7766600058</li>
+        <li>7755550079</li>
+        <li>7755533382</li>
+        <!-- تقدر تضيف باقي الأرقام من القائمة الكاملة -->
       </ul>
     </div>
     <div class="card f100k">
@@ -108,57 +114,3 @@
       <ul class="numbers">
         <li>0770 250 0001</li>
         <li>0770 250 0002</li>
-        <li>0770 250 0003</li>
-      </ul>
-    </div>
-    <div class="card f500k">
-      <h2>فئة 500,000 دينار</h2>
-      <ul class="numbers">
-        <li>0770 500 0001</li>
-        <li>0770 500 0002</li>
-        <li>0770 500 0003</li>
-      </ul>
-    </div>
-    <div class="card f1m">
-      <h2>فئة 1,000,000 دينار</h2>
-      <ul class="numbers">
-        <li>0770 111 0001</li>
-        <li>0770 111 0002</li>
-        <li>0770 111 0003</li>
-      </ul>
-    </div>
-    <div class="card f2m">
-      <h2>فئة 2,000,000 دينار</h2>
-      <ul class="numbers">
-        <li>0770 222 0001</li>
-        <li>0770 222 0002</li>
-        <li>0770 222 0003</li>
-      </ul>
-    </div>
-    <div class="card f3_5m">
-      <h2>فئة 3,500,000 دينار</h2>
-      <ul class="numbers">
-        <li>0770 350 0001</li>
-        <li>0770 350 0002</li>
-        <li>0770 350 0003</li>
-      </ul>
-    </div>
-  </div>
-
-  <script>
-    const searchInput = document.getElementById('search');
-    searchInput.addEventListener('keyup', function() {
-      const filter = searchInput.value.toLowerCase();
-      const numbers = document.querySelectorAll('.numbers li');
-      numbers.forEach(num => {
-        if (num.textContent.toLowerCase().includes(filter)) {
-          num.style.display = '';
-        } else {
-          num.style.display = 'none';
-        }
-      });
-    });
-  </script>
-</body>
-</html>
-
