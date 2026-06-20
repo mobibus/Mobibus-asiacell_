@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
@@ -12,7 +12,7 @@
       direction: rtl;
     }
     .device {
-      width: 400px;
+      width: 420px;
       margin: 30px auto;
       border: 2px solid #ccc;
       border-radius: 20px;
@@ -78,6 +78,8 @@
       grid-template-columns: repeat(2, 1fr);
       gap: 10px;
       padding: 10px;
+      max-height: 200px;
+      overflow-y: auto;
     }
     .num-box {
       background: #fff;
@@ -132,8 +134,50 @@
     </div>
 
     <div class="numbers" id="numbers">
-      <div class="num-box" onclick="selectNumber('7714736506')">7714736506</div>
-      <div class="num-box" onclick="selectNumber('7714736941')">7714736941</div>
-      <div class="num-box" onclick="selectNumber('7714737582')">7714737582</div>
-      <div class="num-box" onclick="selectNumber('7715231635')">7715231635</div>
-      <div class="num-box" onclick="selectNumber('7715231637')">7715231637</div>
+      <!-- أمثلة من فئة 50 ألف -->
+      <div class="num-box" onclick="selectNumber('7766600049')">7766600049</div>
+      <div class="num-box" onclick="selectNumber('7766600034')">7766600034</div>
+      <div class="num-box" onclick="selectNumber('7766600058')">7766600058</div>
+      <div class="num-box" onclick="selectNumber('7755550079')">7755550079</div>
+      <div class="num-box" onclick="selectNumber('7755533382')">7755533382</div>
+      <div class="num-box" onclick="selectNumber('7766600053')">7766600053</div>
+      <div class="num-box" onclick="selectNumber('7766600042')">7766600042</div>
+      <div class="num-box" onclick="selectNumber('7766600092')">7766600092</div>
+      <div class="num-box" onclick="selectNumber('7755551138')">7755551138</div>
+      <div class="num-box" onclick="selectNumber('7755533990')">7755533990</div>
+      <!-- تقدر تكمل باقي الأرقام من الجدول -->
+    </div>
+
+    <div class="summary" id="summary">
+      <h2>ملخص الطلب</h2>
+      <p>الرقم: <span id="selectedNumber">لم يتم اختيار رقم</span></p>
+      <p>السعر: 50,000 دينار</p>
+      <p>رسوم الحجز: 0 دينار</p>
+      <p>المجموع: 50,000 دينار</p>
+    </div>
+
+    <div class="nav-buttons">
+      <button>BACK</button>
+      <button>CONTINUE</button>
+    </div>
+  </div>
+
+  <script>
+    function selectNumber(num) {
+      document.getElementById('selectedNumber').textContent = num;
+    }
+    function searchNumbers() {
+      const filter = document.getElementById('search').value;
+      const boxes = document.querySelectorAll('.num-box');
+      boxes.forEach(box => {
+        if (box.textContent.includes(filter)) {
+          box.style.display = '';
+        } else {
+          box.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
+
