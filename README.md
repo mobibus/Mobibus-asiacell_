@@ -2,18 +2,46 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>الأرقام المميزة - آسياسيل</title>
+  <title>اختيار رقم - آسياسيل</title>
   <style>
     body {
       font-family: 'Tahoma', sans-serif;
-      background: #f4f6f9;
+      background: #f8f9fa;
       margin: 0;
       padding: 20px;
       direction: rtl;
     }
+    header {
+      text-align: center;
+      background: #d60000;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    header img {
+      width: 200px;
+    }
     h1 {
       text-align: center;
-      color: #333;
+      color: #d60000;
+    }
+    .options {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 20px 0;
+    }
+    .option {
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .option:hover {
+      background: #ffe5e5;
+      border-color: #d60000;
     }
     .search-box {
       text-align: center;
@@ -26,107 +54,96 @@
       border-radius: 8px;
       font-size: 16px;
     }
-    .categories {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-    .card {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      padding: 20px;
-      transition: transform 0.2s;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-    }
-    .card h2 {
-      color: #e63946;
-      margin-bottom: 10px;
+    button {
+      padding: 10px 20px;
+      margin-left: 10px;
+      background: #d60000;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
     }
     .numbers {
-      list-style: none;
-      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
     }
-    .numbers li {
-      padding: 5px 0;
-      border-bottom: 1px solid #eee;
+    .num-box {
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 15px;
+      text-align: center;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .num-box:hover {
+      background: #ffe5e5;
+      border-color: #d60000;
+    }
+    .summary {
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    .summary h2 {
+      color: #d60000;
     }
   </style>
 </head>
 <body>
-  <h1>الأرقام المميزة - آسياسيل</h1>
-  <div class="search-box">
-    <input type="text" id="search" placeholder="ابحث عن رقم...">
+  <header>
+    <img src="asiacell-logo.png" alt="Asiacell Logo">
+  </header>
+  <h1>اختيار رقمك المميز</h1>
+
+  <div class="options">
+    <div class="option">REGULAR LINE</div>
+    <div class="option">SILVER</div>
+    <div class="option">GOLD</div>
+    <div class="option">GOLD+</div>
   </div>
-  <div class="categories" id="categories">
-    <div class="card">
-      <h2>فئة 50,000 دينار</h2>
-      <ul class="numbers">
-        <li>0770 500 0001</li>
-        <li>0770 500 0002</li>
-        <li>0770 500 0003</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h2>فئة 100,000 دينار</h2>
-      <ul class="numbers">
-        <li>0770 100 0001</li>
-        <li>0770 100 0002</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h2>فئة 250,000 دينار</h2>
-      <ul class="numbers">
-        <li>0770 250 0001</li>
-        <li>0770 250 0002</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h2>فئة 500,000 دينار</h2>
-      <ul class="numbers">
-        <li>0770 500 0001</li>
-        <li>0770 500 0002</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h2>فئة 1,000,000 دينار</h2>
-      <ul class="numbers">
-        <li>0770 111 0001</li>
-        <li>0770 111 0002</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h2>فئة 2,000,000 دينار</h2>
-      <ul class="numbers">
-        <li>0770 222 0001</li>
-        <li>0770 222 0002</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h2>فئة 3,500,000 دينار</h2>
-      <ul class="numbers">
-        <li>0770 350 0001</li>
-        <li>0770 350 0002</li>
-      </ul>
-    </div>
+
+  <div class="search-box">
+    <input type="text" id="search" placeholder="أدخل 4 إلى 10 أرقام...">
+    <button onclick="searchNumbers()">بحث</button>
+  </div>
+
+  <div class="numbers" id="numbers">
+    <div class="num-box" onclick="selectNumber('7714736506')">7714736506</div>
+    <div class="num-box" onclick="selectNumber('7714736941')">7714736941</div>
+    <div class="num-box" onclick="selectNumber('7714737582')">7714737582</div>
+    <div class="num-box" onclick="selectNumber('7715231635')">7715231635</div>
+    <div class="num-box" onclick="selectNumber('7715231637')">7715231637</div>
+    <div class="num-box" onclick="selectNumber('7715231650')">7715231650</div>
+  </div>
+
+  <div class="summary" id="summary">
+    <h2>ملخص الطلب</h2>
+    <p>الرقم: <span id="selectedNumber">لم يتم اختيار رقم</span></p>
+    <p>السعر: 0 دينار</p>
+    <p>رسوم الحجز: 0 دينار</p>
+    <p>المجموع: 0 دينار</p>
   </div>
 
   <script>
-    const searchInput = document.getElementById('search');
-    searchInput.addEventListener('keyup', function() {
-      const filter = searchInput.value.toLowerCase();
-      const numbers = document.querySelectorAll('.numbers li');
-      numbers.forEach(num => {
-        if (num.textContent.toLowerCase().includes(filter)) {
-          num.style.display = '';
+    function selectNumber(num) {
+      document.getElementById('selectedNumber').textContent = num;
+    }
+    function searchNumbers() {
+      const filter = document.getElementById('search').value;
+      const boxes = document.querySelectorAll('.num-box');
+      boxes.forEach(box => {
+        if (box.textContent.includes(filter)) {
+          box.style.display = '';
         } else {
-          num.style.display = 'none';
+          box.style.display = 'none';
         }
       });
-    });
+    }
   </script>
 </body>
 </html>
-
