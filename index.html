@@ -1,188 +1,174 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>واجهة تعديل الملفات مع أرقام الأسطر</title>
-    <style>
-        :root {
-            --bg-color: #f4f1ea;       /* خلفية كلاسيكية دافئة */
-            --panel-bg: #ffffff;       /* خلفية لوحة التحكم */
-            --text-color: #3d3a35;     /* لون نصوص داكن مريح */
-            --primary-color: #8b7355;  /* لون برونزي كلاسيكية */
-            --primary-hover: #6e5a42;  
-            --border-color: #d1c7bd;   /* لون الحواف */
-            --line-number-bg: #fdfcf7; /* خلفية شريط الأرقام */
-            --line-number-color: #a89f91; /* لون الأرقام */
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 800px;
-            background: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            overflow: hidden;
-        }
-
-        /* شريط التحكم العلوي */
-        .toolbar {
-            background-color: #faf8f5;
-            padding: 15px 20px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .file-input-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-grow: 1;
-        }
-
-        .file-input {
-            padding: 8px 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            font-size: 14px;
-            width: 60%;
-            background-color: #fff;
-            outline: none;
-        }
-
-        /* الأزرار */
-        .btn {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary { background-color: var(--primary-color); color: #fff; }
-        .btn-primary:hover { background-color: var(--primary-hover); }
-        .btn-secondary { background-color: transparent; color: var(--text-color); border: 1px solid var(--border-color); }
-        .btn-secondary:hover { background-color: #f0eae1; }
-
-        /* منطقة المحرر والأرقام */
-        .editor-container {
-            display: flex;
-            position: relative;
-            background-color: #fdfcf7;
-            height: 400px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        /* شريط الأرقام الجانبي */
-        .line-numbers {
-            width: 45px;
-            text-align: center;
-            background-color: var(--line-number-bg);
-            color: var(--line-number-color);
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 16px;
-            line-height: 1.6;
-            padding: 20px 0;
-            box-sizing: border-box;
-            border-left: 1px solid var(--border-color); /* يفصل الأرقام عن النص */
-            overflow: hidden;
-            user-select: none;
-        }
-
-        /* منطقة كتابة النص */
-        .editor-textarea {
-            flex-grow: 1;
-            height: 100%;
-            padding: 20px;
-            box-sizing: border-box;
-            border: none;
-            resize: none;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 16px;
-            line-height: 1.6;
-            color: #2c251e;
-            background-color: transparent;
-            outline: none;
-            overflow-y: auto;
-        }
-
-        /* شريط الحالة السفلي */
-        .statusbar {
-            background-color: #faf8f5;
-            padding: 10px 20px;
-            font-size: 12px;
-            color: #8a8279;
-            display: flex;
-            justify-content: space-between;
-        }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <div class="toolbar">
-        <div class="file-input-group">
-            <button class="btn btn-secondary">تعديل</button>
-            <button class="btn btn-secondary">معاينة</button>
-            <input type="text" class="file-input" placeholder="اسم الملف...">
-        </div>
-        <div>
-            <button class="btn btn-primary">حفظ التغييرات</button>
-        </div>
-    </div>
-
-    <div class="editor-container">
-        <div class="line-numbers" id="lineNumbers">1</div>
-        <textarea class="editor-textarea" id="editor" placeholder="اكتب محتويات الملف هنا..." onscroll="syncScroll()"></textarea>
-    </div>
-
-    <div class="statusbar">
-        <span>الترميز: UTF-8</span>
-        <span>المسافات: 2</span>
-    </div>
-</div>
-
-<script>
-    const editor = document.getElementById('editor');
-    const lineNumbers = document.getElementById('lineNumbers');
-
-    // تحديث الأرقام تلقائياً عند الكتابة أو الضغط على Enter
-    editor.addEventListener('input', () => {
-        const lines = editor.value.split('\n');
-        const count = lines.length;
-        let lineNumbersHTML = '';
-        
-        for (let i = 1; i <= count; i++) {
-            lineNumbersHTML += i + '<br>';
-        }
-        
-        lineNumbers.innerHTML = lineNumbersHTML;
-    });
-
-    // مزامنة السكرول (النزول والصعود) بين النص والأرقام
-    function syncScroll() {
-        lineNumbers.scrollTop = editor.scrollTop;
-    }
-</script>
-
-</body>
-</html>
+for (String num in rawGoldNumbers) {
+  temp.add({
+    "number": num,
+    "price": "50,000 د.ع",
+    "type": "ذهبي",
+    "color": Colors.amber,
+  });
+}
+Card(
+  elevation: 5,
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(20),
+  ),
+  child: Container(
+    padding: const EdgeInsets.all(15),
+    child: Row(
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10,
+            vertical: 6,
+          ),
+          decoration: BoxDecoration(
+            color: Colors.amber.shade100,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: const Text(
+            "ذهبي",
+            style: TextStyle(
+              color: Colors.orange,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        const Spacer(),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(
+              item["number"],
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              item["price"],
+              style: const TextStyle(
+                color: Colors.green,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(width: 15),
+        ElevatedButton(
+          onPressed: () {},
+          child: const Text("حجز"),
+        ),
+      ],
+    ),
+  ),
+)
+final List<String> rawGoldNumbers = [
+  "07755556673",
+  "07755553319",
+  "07755551149",
+  "07755558575",
+  "07755554469",
+  "07755556678",
+  "07755553346",
+  "07760000136",
+  "07755558803",
+  "07755554487",
+  "07755556689",
+  "07755553381",
+  "07760000259",
+  "07755558810",
+  "07755556624",
+  "07755556691",
+  "07755551106",
+  "07760000273",
+  "07755558812",
+  "07760000417",
+  "07755557505",
+  "07755551130",
+  "07760000317",
+  "07760000923",
+  "07760000427",
+  "07755557724",
+  "07755551164",
+  "07760000324",
+  "07760000926",
+  "07760000428",
+  "07755557782",
+  "07755551169",
+  "07760000325",
+  "07760000928",
+  "07760000436",
+  "07755558871",
+  "07755551197",
+  "07760000352",
+  "07760000938",
+  "07760000438",
+  "07755559535",
+  "07755551535",
+  "07760000357",
+  "07760000942",
+  "07760000457",
+  "07755559577",
+  "07760000798",
+  "07755557768",
+  "07760000645",
+  "07755559932",
+  "07760000812",
+  "07755558565",
+  "07760000648",
+  "07760000983",
+  "07755559937",
+  "07760000814",
+  "07755558814",
+  "07760000652",
+  "07760000986",
+  "07755550046",
+  "07760000821",
+  "07755558824",
+  "07760000684",
+  "07760000145",
+  "07755550084",
+  "07760000423",
+  "07755558839",
+  "07760000713",
+  "07760000154",
+  "07755551102",
+  "07760000538",
+  "07755558861",
+  "07760000726",
+  "07760000158",
+  "07760000183",
+  "07755558896",
+  "07760000278",
+  "07760000174",
+  "07760000236",
+  "07760000186",
+  "07760000572",
+  "07755558897",
+  "07760000281",
+  "07760000245",
+  "07760000198",
+  "07755559947",
+  "07760000289",
+  "07760000241",
+  "07760000254",
+  "07760000215",
+  "07760000574",
+  "07755559972",
+  "07760000294",
+  "07760000374",
+  "07760000219",
+  "07755559978",
+  "07760000315",
+  "07760000251",
+  "07760000387",
+  "07760000235",
+  "07760000583",
+  "07755550012",
+  "07760000316",
+  "07760000823",
+  "07760000429",
+  "07755550067",
+  "07760000326",
+  "07760000256",
+  "07760000835",
+];
