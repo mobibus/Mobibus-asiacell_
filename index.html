@@ -11,7 +11,15 @@
     }
     h1 {
       color: #d60000;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
+    }
+    input[type="text"] {
+      padding: 10px;
+      width: 300px;
+      border: 2px solid #d60000;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 16px;
     }
     .category {
       margin: 20px auto;
@@ -19,7 +27,7 @@
       border: 2px solid #d60000;
       border-radius: 12px;
       background-color: #fff;
-      width: 80%;
+      width: 90%;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       cursor: pointer;
     }
@@ -59,9 +67,12 @@
 <body>
   <h1>الأرقام المميزة - فئة 50,000 دينار</h1>
 
+  <!-- مربع البحث -->
+  <input type="text" id="searchBox" placeholder="ابحث عن رقم..." onkeyup="searchNumbers()">
+
   <div class="category" onclick="toggleNumbers(this)">
     <h2>عرض الأرقام</h2>
-    <div class="numbers">
+    <div class="numbers" id="numbersList">
       <div class="number">7766600049</div>
       <div class="number">7766600034</div>
       <div class="number">7766600058</div>
@@ -164,6 +175,10 @@
       const numbers = category.querySelector(".numbers");
       numbers.style.display = (numbers.style.display === "block") ? "none" : "block";
     }
-  </script>
-</body>
-</html>
+
+    function searchNumbers() {
+      const input = document.getElementById("searchBox").value.toLowerCase();
+      const numbers = document.getElementById("numbersList").getElementsByClassName("number");
+      for (let i = 0; i < numbers.length; i++) {
+        const num = numbers[i].textContent.toLowerCase();
+        numbers[i].style.display = num.includes(input) ? "inline-block" :
