@@ -1,163 +1,95 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>أسياسيل - كيفية احتساب صرف الخطوط أسياسيل</title>
+  <title>الأرقام المميزة - آسياسيل</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
-      max-width: 480px;
-      margin: 20px auto;
-      padding: 140px 15px 15px;
-      background: #fff url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Asiacell_Logo.svg/2560px-Asiacell_Logo.svg.png') no-repeat center top;
-      background-size: 140px auto;
-      color: #cc0000;
-      border: 3px solid #cc0000;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(204,0,0,0.4);
-    }
-    h1, h2 {
+      font-family: Tahoma;
+      background-color: #f9f9f9;
       text-align: center;
-      margin: 5px 0;
     }
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-      font-size: 16px;
-      color: #cc0000;
+    h1 {
+      color: #d60000;
+      margin-bottom: 30px;
     }
-    select, input[type="number"] {
-      width: 100%;
-      padding: 10px;
-      margin-top: 6px;
-      font-size: 17px;
-      border: 2px solid #cc0000;
-      border-radius: 6px;
+    .category {
+      margin: 30px auto;
+      padding: 20px;
+      border: 2px solid #d60000;
+      border-radius: 12px;
+      background-color: #fff;
+      width: 70%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
-    button {
-      margin-top: 25px;
-      width: 100%;
-      background: linear-gradient(135deg, #cc0000, #990000);
-      color: white;
-      padding: 12px 0;
+    .category h2 {
+      color: #d60000;
+      margin-bottom: 15px;
+    }
+    .number {
+      display: inline-block;
+      margin: 10px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #ffeaea;
       font-size: 20px;
       font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
+      color: #333;
+      width: 200px;
+      position: relative;
     }
-    #output {
-      margin-top: 25px;
-      background: #fff0f0;
-      padding: 20px;
-      border: 2px solid #cc0000;
-      border-radius: 10px;
-      font-weight: bold;
-      color: #990000;
-      white-space: pre-line;
-      min-height: 80px;
-    }
-    p.footer {
-      text-align: center;
-      font-size: 13px;
-      color: #aa0000;
-      margin-top: 30px;
-      font-style: italic;
+    .number::before {
+      content: "★";
+      color: gold;
+      font-size: 22px;
+      position: absolute;
+      left: 10px;
+      top: 10px;
     }
   </style>
 </head>
 <body>
+  <h1>الأرقام المميزة - آسياسيل</h1>
 
-  <h1>أسياسيل</h1>
-  <h2>كيفية احتساب صرف الخطوط أسياسيل</h2>
+  <div class="category">
+    <h2>فئة 50,000 دينار</h2>
+    <div class="number">0770 123 4567</div>
+    <div class="number">0770 765 4321</div>
+  </div>
 
-  <label for="lineType">نوع الخط:</label>
-  <select id="lineType">
-    <option value="yooz">خط Red yooz</option>
-    <option value="yom">خط يوم علينة ويوم عليك</option>
-    <option value="other">خط الدفع المسبق القديم</option>
-    <option value="other">خط الدفع المسبق الجديد</option>
-    <option value="other">خط الشباب</option>
-    <option value="other">خط الماس</option>
-    <option value="other">خط العتبات</option>
-    <option value="other">خط ايليت</option>
-    <option value="other">خطّ المؤسسات</option>
-    <option value="other">خط اي كنترول</option>
-    <option value="other">خط خلات</option>
-    <option value="other">خط الدينار (سليمانية)</option>
-   <option value="other">خط بزنز ماكس</option>
-    <option value="other"> Red line </option>
-</select>
+  <div class="category">
+    <h2>فئة 100,000 دينار</h2>
+    <div class="number">0771 111 2222</div>
+    <div class="number">0771 333 4444</div>
+  </div>
 
-  <label for="amount">المبلغ (كوين أو دينار):</label>
-  <input type="number" id="amount" min="1" placeholder="اكتب المبلغ هنا" />
+  <div class="category">
+    <h2>فئة 250,000 دينار</h2>
+    <div class="number">0772 555 6666</div>
+    <div class="number">0772 777 8888</div>
+  </div>
 
-  <label for="serviceType">نوع الخدمة:</label>
-  <select id="serviceType">
-    <option value="all">الكل</option>
-    <option value="call">الاتصال فقط</option>
-    <option value="internet">الإنترنت فقط</option>
-    <option value="sms">الرسائل فقط</option>
-  </select>
+  <div class="category">
+    <h2>فئة 500,000 دينار</h2>
+    <div class="number">0773 999 0000</div>
+  </div>
 
-  <button onclick="calculate()">احسب الآن</button>
+  <div class="category">
+    <h2>فئة 1,000,000 دينار</h2>
+    <div class="number">0774 123 1234</div>
+  </div>
 
-  <div id="output"></div>
+  <div class="category">
+    <h2>فئة 2,000,000 دينار</h2>
+    <div class="number">0775 456 4567</div>
+  </div>
 
-  <p class="footer">© تصميم محمد جواد - أسياسيل تجمعنه سوة</p>
+  <div class="category">
+    <h2>فئة 3,500,000 دينار</h2>
+    <div class="number">0776 789 7890</div>
+  </div>
 
-  <script>
-    function format(num) {
-      return Math.floor(num);
-    }
-
-    function calculate() {
-      const line = document.getElementById("lineType").value;
-      const amount = parseFloat(document.getElementById("amount").value);
-      const service = document.getElementById("serviceType").value;
-      const output = document.getElementById("output");
-
-      if (isNaN(amount) || amount <= 0) {
-        output.textContent = "يرجى إدخال مبلغ صالح.";
-        return;
-      }
-
-      let callRate = 2.4;
-      let smsRate = 50;
-      let internetRate = 4;
-
-      if (line === "yooz" || line === "yom") {
-        callRate = 2;
-        smsRate = 50;
-      } else {
-        callRate = 2.4;
-        smsRate = 50;
-      }
-
-      const seconds = amount / callRate;
-      const minutes = seconds / 60;
-      const smsCount = amount / smsRate;
-      const megabytes = amount / internetRate;
-      const gigabytes = megabytes / 1024;
-
-      let internetDisplay = "";
-      if (megabytes >= 1000) {
-        internetDisplay = `${format(gigabytes)} GB`;
-      } else {
-        internetDisplay = `${format(megabytes)} MB`;
-      }
-
-      let result = "";
-      if (service === "all" || service === "call")
-        result += `📞 الاتصال: ${format(minutes)} دقيقة\n`;
-      if (service === "all" || service === "internet")
-        result += `🌐 الإنترنت: ${internetDisplay}\n`;
-      if (service === "all" || service === "sms")
-        result += `✉️ الرسائل: ${format(smsCount)} رسالة`;
-
-      output.textContent = result;
-    }
-  </script>
 </body>
 </html>
+
