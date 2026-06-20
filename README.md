@@ -66,13 +66,13 @@
 
   <div class="category">
     <h2>فئة 250,000 دينار</h2>
-    <div class="number">0772 555 6666</div>
+    <div class="number">07700 6666</div>
     <div class="number">0772 777 8888</div>
   </div>
 
   <div class="category">
     <h2>فئة 500,000 دينار</h2>
-    <div class="number">0773 999 0000</div>
+    <div class="number">0777777 0000</div>
   </div>
 
   <div class="category">
