@@ -14,45 +14,156 @@
       margin-bottom: 30px;
     }
     .category {
-      margin: 30px auto;
-      padding: 20px;
+      margin: 20px auto;
+      padding: 15px;
       border: 2px solid #d60000;
       border-radius: 12px;
       background-color: #fff;
-      width: 60%;
+      width: 80%;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      cursor: pointer;
+    }
+    .category h2 {
+      margin: 0;
+      color: #d60000;
+    }
+    .numbers {
+      display: none; /* مخفية افتراضياً */
+      margin-top: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
     }
     .number {
       display: inline-block;
-      margin: 10px;
-      padding: 15px;
+      margin: 6px;
+      padding: 10px;
       border: 1px solid #ccc;
       border-radius: 8px;
       background-color: #ffeaea;
-      font-size: 20px;
+      font-size: 16px;
       font-weight: bold;
       color: #333;
-      width: 200px;
+      width: 160px;
       position: relative;
     }
     .number::before {
       content: "★";
       color: gold;
-      font-size: 22px;
+      font-size: 18px;
       position: absolute;
-      left: 10px;
-      top: 10px;
+      left: 8px;
+      top: 5px;
     }
   </style>
 </head>
 <body>
   <h1>الأرقام المميزة - فئة 50,000 دينار</h1>
 
-  <div class="category">
-    <div class="number">0770 123 4567</div>
-    <div class="number">0770 765 4321</div>
-    <div class="number">0770 555 8888</div>
+  <div class="category" onclick="toggleNumbers(this)">
+    <h2>عرض الأرقام</h2>
+    <div class="numbers">
+      <div class="number">7766600049</div>
+      <div class="number">7766600034</div>
+      <div class="number">7766600058</div>
+      <div class="number">7755550079</div>
+      <div class="number">7755533382</div>
+      <div class="number">7766600053</div>
+      <div class="number">7766600042</div>
+      <div class="number">7766600092</div>
+      <div class="number">7755551138</div>
+      <div class="number">775553390</div>
+      <div class="number">7766600043</div>
+      <div class="number">7766600098</div>
+      <div class="number">7766600059</div>
+      <div class="number">7766600097</div>
+      <div class="number">7755551140</div>
+      <div class="number">775554417</div>
+      <div class="number">7766600029</div>
+      <div class="number">7766600082</div>
+      <div class="number">7766661129</div>
+      <div class="number">7755551147</div>
+      <div class="number">775554460</div>
+      <div class="number">7766600039</div>
+      <div class="number">7766600084</div>
+      <div class="number">7766661103</div>
+      <div class="number">7755551170</div>
+      <div class="number">775554566</div>
+      <div class="number">7766600019</div>
+      <div class="number">7766661088</div>
+      <div class="number">7755551189</div>
+      <div class="number">775554588</div>
+      <div class="number">7766600054</div>
+      <div class="number">7766600024</div>
+      <div class="number">7766660094</div>
+      <div class="number">7755552207</div>
+      <div class="number">775556545</div>
+      <div class="number">7766600079</div>
+      <div class="number">7766600028</div>
+      <div class="number">7766661157</div>
+      <div class="number">7755552585</div>
+      <div class="number">775556604</div>
+      <div class="number">7766600023</div>
+      <div class="number">7766600031</div>
+      <div class="number">7766661178</div>
+      <div class="number">7755553368</div>
+      <div class="number">775556681</div>
+      <div class="number">7766600038</div>
+      <div class="number">7755558827</div>
+      <div class="number">7755553370</div>
+      <div class="number">775556684</div>
+      <div class="number">7766600035</div>
+      <div class="number">7766600047</div>
+      <div class="number">7755558831</div>
+      <div class="number">7755553380</div>
+      <div class="number">7755557721</div>
+      <div class="number">7755553566</div>
+      <div class="number">7755551160</div>
+      <div class="number">7755558860</div>
+      <div class="number">7760000917</div>
+      <div class="number">7755553310</div>
+      <div class="number">7755553575</div>
+      <div class="number">7755551180</div>
+      <div class="number">7755558874</div>
+      <div class="number">7755556629</div>
+      <div class="number">7755553364</div>
+      <div class="number">7755553577</div>
+      <div class="number">7755551192</div>
+      <div class="number">7755558887</div>
+      <div class="number">7755556683</div>
+      <div class="number">7755553394</div>
+      <div class="number">7755554428</div>
+      <div class="number">7755551955</div>
+      <div class="number">7755559920</div>
+      <div class="number">7755555715</div>
+      <div class="number">775555322</div>
+      <div class="number">7755554462</div>
+      <div class="number">7755552201</div>
+      <div class="number">7755559926</div>
+      <div class="number">7755555745</div>
+      <div class="number">775555395</div>
+      <div class="number">7755554497</div>
+      <div class="number">7755552247</div>
+      <div class="number">7755559981</div>
+      <div class="number">7755557728</div>
+      <div class="number">7755554407</div>
+      <div class="number">7755556525</div>
+      <div class="number">7755552248</div>
+      <div class="number">7755550043</div>
+      <div class="number">7755557734</div>
+      <div class="number">7755554432</div>
+      <div class="number">7755556544</div>
+      <div class="number">7755553304</div>
+      <div class="number">7755555025</div>
+      <div class="number">7755557741</div>
+      <div class="number">7755554461</div>
+    </div>
   </div>
 
+  <script>
+    function toggleNumbers(category) {
+      const numbers = category.querySelector(".numbers");
+      numbers.style.display = (numbers.style.display === "block") ? "none" : "block";
+    }
+  </script>
 </body>
 </html>
