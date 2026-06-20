@@ -1,183 +1,92 @@
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-  <meta charset="UTF-8">
-  <title>جهاز اختيار الأرقام - آسياسيل</title>
-  <style>
-    body {
-      font-family: 'Tahoma', sans-serif;
-      background: linear-gradient(to bottom, #ffffff, #ffe5e5);
-      margin: 0;
-      padding: 0;
-      direction: rtl;
-    }
-    .device {
-      width: 420px;
-      margin: 30px auto;
-      border: 2px solid #ccc;
-      border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-      overflow: hidden;
-      background: #f8f9fa;
-    }
-    header {
-      text-align: center;
-      background: #d60000;
-      padding: 15px;
-    }
-    header img {
-      width: 150px;
-    }
-    h1 {
-      text-align: center;
-      color: #d60000;
-      font-size: 18px;
-      margin: 10px 0;
-    }
-    .options {
-      display: flex;
-      justify-content: space-around;
-      padding: 10px;
-    }
-    .option {
-      background: #fff;
-      border: 1px solid #ccc;
-      padding: 8px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: 0.3s;
-    }
-    .option:hover {
-      background: #ffe5e5;
-      border-color: #d60000;
-    }
-    .search-box {
-      text-align: center;
-      margin: 10px;
-    }
-    input {
-      padding: 8px;
-      width: 70%;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 14px;
-    }
-    button {
-      padding: 8px 12px;
-      margin-left: 5px;
-      background: #d60000;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 14px;
-    }
-    .numbers {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      padding: 10px;
-      max-height: 200px;
-      overflow-y: auto;
-    }
-    .num-box {
-      background: #fff;
-      border: 1px solid #ccc;
-      padding: 10px;
-      text-align: center;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.3s;
-      font-size: 14px;
-    }
-    .num-box:hover {
-      background: #ffe5e5;
-      border-color: #d60000;
-    }
-    .summary {
-      background: #fff;
-      border-top: 2px solid #d60000;
-      padding: 15px;
-      font-size: 14px;
-    }
-    .summary h2 {
-      color: #d60000;
-      font-size: 16px;
-    }
-    .nav-buttons {
-      text-align: center;
-      padding: 10px;
-    }
-    .nav-buttons button {
-      margin: 0 5px;
-    }
-  </style>
-</head>
-<body>
-  <div class="device">
-    <header>
-      <img src="asiacell-logo.png" alt="Asiacell Logo">
-    </header>
-    <h1>اختيار رقمك المميز</h1>
+<Window x:Class="AsiacellNumbersApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="الأرقام المميزة - آسياسيل" Height="500" Width="400">
+    <Grid Background="#FFF8F9FA">
+        <StackPanel Margin="10">
+            <!-- شعار -->
+            <Border Background="#D60000" CornerRadius="8" Padding="10" HorizontalAlignment="Center">
+                <TextBlock Text="Asiacell" Foreground="White" FontSize="24" FontWeight="Bold"/>
+            </Border>
 
-    <div class="options">
-      <div class="option">REGULAR</div>
-      <div class="option">SILVER</div>
-      <div class="option">GOLD</div>
-      <div class="option">GOLD+</div>
-    </div>
+            <!-- مربع البحث -->
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <TextBox x:Name="txtSearch" Width="250" Height="30" Margin="0,0,5,0" 
+                         PlaceholderText="ابحث عن رقم..."/>
+                <Button Content="بحث" Width="80" Click="BtnSearch_Click"/>
+            </StackPanel>
 
-    <div class="search-box">
-      <input type="text" id="search" placeholder="أدخل 4 إلى 10 أرقام...">
-      <button onclick="searchNumbers()">بحث</button>
-    </div>
+            <!-- قائمة الأرقام -->
+            <ListBox x:Name="lstNumbers" Height="250" SelectionChanged="LstNumbers_SelectionChanged"/>
 
-    <div class="numbers" id="numbers">
-      <!-- أمثلة من فئة 50 ألف -->
-      <div class="num-box" onclick="selectNumber('7766600049')">7766600049</div>
-      <div class="num-box" onclick="selectNumber('7766600034')">7766600034</div>
-      <div class="num-box" onclick="selectNumber('7766600058')">7766600058</div>
-      <div class="num-box" onclick="selectNumber('7755550079')">7755550079</div>
-      <div class="num-box" onclick="selectNumber('7755533382')">7755533382</div>
-      <div class="num-box" onclick="selectNumber('7766600053')">7766600053</div>
-      <div class="num-box" onclick="selectNumber('7766600042')">7766600042</div>
-      <div class="num-box" onclick="selectNumber('7766600092')">7766600092</div>
-      <div class="num-box" onclick="selectNumber('7755551138')">7755551138</div>
-      <div class="num-box" onclick="selectNumber('7755533990')">7755533990</div>
-      <!-- تقدر تكمل باقي الأرقام من الجدول -->
-    </div>
+            <!-- ملخص الطلب -->
+            <Border Background="White" BorderBrush="#D60000" BorderThickness="2" CornerRadius="8" Padding="10" Margin="10,5,10,0">
+                <StackPanel>
+                    <TextBlock Text="ملخص الطلب" Foreground="#D60000" FontSize="16" FontWeight="Bold"/>
+                    <TextBlock x:Name="lblSelected" Text="الرقم المختار: لم يتم اختيار رقم" Margin="0,5,0,0"/>
+                    <TextBlock Text="السعر: 50,000 دينار"/>
+                    <TextBlock Text="رسوم الحجز: 0 دينار"/>
+                    <TextBlock Text="المجموع: 50,000 دينار"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </Grid>
+</Window>
+using System.Linq;
+using System.Windows;
 
-    <div class="summary" id="summary">
-      <h2>ملخص الطلب</h2>
-      <p>الرقم: <span id="selectedNumber">لم يتم اختيار رقم</span></p>
-      <p>السعر: 50,000 دينار</p>
-      <p>رسوم الحجز: 0 دينار</p>
-      <p>المجموع: 50,000 دينار</p>
-    </div>
+namespace AsiacellNumbersApp
+{
+    public partial class MainWindow : Window
+    {
+        string[] numbers = {
+            "7766600049","7766600034","7766600058","7755550079","7755533382",
+            "7766600053","7766600042","7766600092","7755551138","7755533990",
+            "7766600098","7766600059","7766600097","7755551140","7755544417",
+            "7766600029","7766600082","7766661129","7755551147","7755554460",
+            "7766600039","7766600084","7766661103","7755551170","7755554566",
+            "7766600052","7766600199","7766660888","7755551189","7755554588",
+            "7766600054","7766600024","7766660094","7755552207","7755556545",
+            "7766600079","7766600028","7766661157","7755552585","7755556604",
+            "7766600023","7766600031","7766661178","7755553368","7755556681",
+            "7766600038","7755558827","7755553370","7755556684",
+            "7766600035","7766600047","7755558831","7755553380","7755557721",
+            "7755553566","7755551160","7755558860","7760000917","7755553310",
+            "7755553575","7755551180","7755558874","7755556629","7755553364",
+            "7755553577","7755551192","7755558887","7755556683","7755553394",
+            "7755554428","7755551955","7755559920","7755555715","7755553522",
+            "7755554462","7755552201","7755559926","7755555745","7755553595",
+            "7755554497","7755552247","7755559981","7755557728","7755554407",
+            "7755556525","7755552248","7755550043","7755557734","7755554432",
+            "7755556544","7755553304","7755555025","7755557741","7755554461"
+        };
 
-    <div class="nav-buttons">
-      <button>BACK</button>
-      <button>CONTINUE</button>
-    </div>
-  </div>
-
-  <script>
-    function selectNumber(num) {
-      document.getElementById('selectedNumber').textContent = num;
-    }
-    function searchNumbers() {
-      const filter = document.getElementById('search').value;
-      const boxes = document.querySelectorAll('.num-box');
-      boxes.forEach(box => {
-        if (box.textContent.includes(filter)) {
-          box.style.display = '';
-        } else {
-          box.style.display = 'none';
+        public MainWindow()
+        {
+            InitializeComponent();
+            LoadNumbers();
         }
-      });
-    }
-  </script>
-</body>
-</html>
 
+        private void LoadNumbers()
+        {
+            lstNumbers.ItemsSource = numbers;
+        }
+
+        private void BtnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            string filter = txtSearch.Text;
+            var filtered = numbers.Where(n => n.Contains(filter)).ToArray();
+            lstNumbers.ItemsSource = filtered;
+        }
+
+        private void LstNumbers_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (lstNumbers.SelectedItem != null)
+            {
+                lblSelected.Text = "الرقم المختار: " + lstNumbers.SelectedItem.ToString();
+            }
+        }
+    }
+}
+
+                      
