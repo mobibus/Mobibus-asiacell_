@@ -6,14 +6,21 @@
   <style>
     body {
       font-family: 'Tahoma', sans-serif;
-      background: #f4f6f9;
+      background: linear-gradient(to bottom, #ffffff, #f8f9fa);
       margin: 0;
       padding: 20px;
       direction: rtl;
     }
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    header img {
+      width: 200px;
+    }
     h1 {
       text-align: center;
-      color: #333;
+      color: #d60000;
     }
     .search-box {
       text-align: center;
@@ -42,8 +49,8 @@
       transform: translateY(-5px);
     }
     .card h2 {
-      color: #e63946;
       margin-bottom: 10px;
+      font-weight: bold;
     }
     .numbers {
       list-style: none;
@@ -53,62 +60,82 @@
       padding: 5px 0;
       border-bottom: 1px solid #eee;
     }
+    /* ألوان مميزة لكل فئة */
+    .f50k h2 { color: #0077b6; }
+    .f100k h2 { color: #0096c7; }
+    .f250k h2 { color: #00b4d8; }
+    .f500k h2 { color: #48cae4; }
+    .f1m h2 { color: #e63946; }
+    .f2m h2 { color: #ffb703; }
+    .f3_5m h2 { color: #9d0208; }
   </style>
 </head>
 <body>
+  <header>
+    <img src="asiacell-logo.png" alt="Asiacell Logo">
+  </header>
   <h1>الأرقام المميزة - آسياسيل</h1>
   <div class="search-box">
     <input type="text" id="search" placeholder="ابحث عن رقم...">
   </div>
   <div class="categories" id="categories">
-    <div class="card">
+    <div class="card f50k">
       <h2>فئة 50,000 دينار</h2>
+      <ul class="numbers">
+        <li>0770 500 0001</li>
+        <li>0770 500 0002</li>
+        <li>0770 500 0003</li>
+        <li>0770 500 0004</li>
+        <li>0770 500 0005</li>
+      </ul>
+    </div>
+    <div class="card f100k">
+      <h2>فئة 100,000 دينار</h2>
+      <ul class="numbers">
+        <li>0770 100 0001</li>
+        <li>0770 100 0002</li>
+        <li>0770 100 0003</li>
+        <li>0770 100 0004</li>
+      </ul>
+    </div>
+    <div class="card f250k">
+      <h2>فئة 250,000 دينار</h2>
+      <ul class="numbers">
+        <li>0770 250 0001</li>
+        <li>0770 250 0002</li>
+        <li>0770 250 0003</li>
+      </ul>
+    </div>
+    <div class="card f500k">
+      <h2>فئة 500,000 دينار</h2>
       <ul class="numbers">
         <li>0770 500 0001</li>
         <li>0770 500 0002</li>
         <li>0770 500 0003</li>
       </ul>
     </div>
-    <div class="card">
-      <h2>فئة 100,000 دينار</h2>
-      <ul class="numbers">
-        <li>0770 100 0001</li>
-        <li>0770 100 0002</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h2>فئة 250,000 دينار</h2>
-      <ul class="numbers">
-        <li>0770 250 0001</li>
-        <li>0770 250 0002</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h2>فئة 500,000 دينار</h2>
-      <ul class="numbers">
-        <li>0770 500 0001</li>
-        <li>0770 500 0002</li>
-      </ul>
-    </div>
-    <div class="card">
+    <div class="card f1m">
       <h2>فئة 1,000,000 دينار</h2>
       <ul class="numbers">
         <li>0770 111 0001</li>
         <li>0770 111 0002</li>
+        <li>0770 111 0003</li>
       </ul>
     </div>
-    <div class="card">
+    <div class="card f2m">
       <h2>فئة 2,000,000 دينار</h2>
       <ul class="numbers">
         <li>0770 222 0001</li>
         <li>0770 222 0002</li>
+        <li>0770 222 0003</li>
       </ul>
     </div>
-    <div class="card">
+    <div class="card f3_5m">
       <h2>فئة 3,500,000 دينار</h2>
       <ul class="numbers">
         <li>0770 350 0001</li>
         <li>0770 350 0002</li>
+        <li>0770 350 0003</li>
       </ul>
     </div>
   </div>
@@ -129,3 +156,4 @@
   </script>
 </body>
 </html>
+
