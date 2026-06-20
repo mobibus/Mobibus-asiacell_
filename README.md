@@ -5,91 +5,128 @@
   <title>الأرقام المميزة - آسياسيل</title>
   <style>
     body {
-      font-family: Tahoma;
-      background-color: #f9f9f9;
-      text-align: center;
+      font-family: 'Tahoma', sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+      padding: 20px;
+      direction: rtl;
     }
     h1 {
-      color: #d60000;
-      margin-bottom: 30px;
+      text-align: center;
+      color: #333;
     }
-    .category {
-      margin: 30px auto;
-      padding: 20px;
-      border: 2px solid #d60000;
-      border-radius: 12px;
-      background-color: #fff;
-      width: 70%;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    .search-box {
+      text-align: center;
+      margin: 20px 0;
     }
-    .category h2 {
-      color: #d60000;
-      margin-bottom: 15px;
-    }
-    .number {
-      display: inline-block;
-      margin: 10px;
-      padding: 15px;
+    input {
+      padding: 10px;
+      width: 60%;
       border: 1px solid #ccc;
       border-radius: 8px;
-      background-color: #ffeaea;
-      font-size: 20px;
-      font-weight: bold;
-      color: #333;
-      width: 200px;
-      position: relative;
+      font-size: 16px;
     }
-    .number::before {
-      content: "★";
-      color: gold;
-      font-size: 22px;
-      position: absolute;
-      left: 10px;
-      top: 10px;
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 20px;
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card h2 {
+      color: #e63946;
+      margin-bottom: 10px;
+    }
+    .numbers {
+      list-style: none;
+      padding: 0;
+    }
+    .numbers li {
+      padding: 5px 0;
+      border-bottom: 1px solid #eee;
     }
   </style>
 </head>
 <body>
   <h1>الأرقام المميزة - آسياسيل</h1>
-
-  <div class="category">
-    <h2>فئة 50,000 دينار</h2>
-    <div class="number">0770 123 4567</div>
-    <div class="number">0770 765 4321</div>
+  <div class="search-box">
+    <input type="text" id="search" placeholder="ابحث عن رقم...">
+  </div>
+  <div class="categories" id="categories">
+    <div class="card">
+      <h2>فئة 50,000 دينار</h2>
+      <ul class="numbers">
+        <li>0770 500 0001</li>
+        <li>0770 500 0002</li>
+        <li>0770 500 0003</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>فئة 100,000 دينار</h2>
+      <ul class="numbers">
+        <li>0770 100 0001</li>
+        <li>0770 100 0002</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>فئة 250,000 دينار</h2>
+      <ul class="numbers">
+        <li>0770 250 0001</li>
+        <li>0770 250 0002</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>فئة 500,000 دينار</h2>
+      <ul class="numbers">
+        <li>0770 500 0001</li>
+        <li>0770 500 0002</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>فئة 1,000,000 دينار</h2>
+      <ul class="numbers">
+        <li>0770 111 0001</li>
+        <li>0770 111 0002</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>فئة 2,000,000 دينار</h2>
+      <ul class="numbers">
+        <li>0770 222 0001</li>
+        <li>0770 222 0002</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>فئة 3,500,000 دينار</h2>
+      <ul class="numbers">
+        <li>0770 350 0001</li>
+        <li>0770 350 0002</li>
+      </ul>
+    </div>
   </div>
 
-  <div class="category">
-    <h2>فئة 100,000 دينار</h2>
-    <div class="number">0771 111 2222</div>
-    <div class="number">0771 333 4444</div>
-  </div>
-
-  <div class="category">
-    <h2>فئة 250,000 دينار</h2>
-    <div class="number">07700 6666</div>
-    <div class="number">0772 777 8888</div>
-  </div>
-
-  <div class="category">
-    <h2>فئة 500,000 دينار</h2>
-    <div class="number">0777777 0000</div>
-  </div>
-
-  <div class="category">
-    <h2>فئة 1,000,000 دينار</h2>
-    <div class="number">0774 123 1234</div>
-  </div>
-
-  <div class="category">
-    <h2>فئة 2,000,000 دينار</h2>
-    <div class="number">0775 456 4567</div>
-  </div>
-
-  <div class="category">
-    <h2>فئة 3,500,000 دينار</h2>
-    <div class="number">0776 789 7890</div>
-  </div>
-
+  <script>
+    const searchInput = document.getElementById('search');
+    searchInput.addEventListener('keyup', function() {
+      const filter = searchInput.value.toLowerCase();
+      const numbers = document.querySelectorAll('.numbers li');
+      numbers.forEach(num => {
+        if (num.textContent.toLowerCase().includes(filter)) {
+          num.style.display = '';
+        } else {
+          num.style.display = 'none';
+        }
+      });
+    });
+  </script>
 </body>
 </html>
 
