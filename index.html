@@ -5,148 +5,127 @@
   <title>الأرقام المميزة - آسياسيل</title>
   <style>
     body {
-      font-family: Tahoma;
-      background-color: #f4f4f4;
-      text-align: center;
+      font-family: 'Tahoma', sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+      padding: 20px;
+      direction: rtl;
     }
     h1 {
-      color: #d60000;
-      margin-bottom: 20px;
+      text-align: center;
+      color: #333;
     }
-    input[type="text"], button {
+    .search-box {
+      text-align: center;
+      margin: 20px 0;
+    }
+    input {
       padding: 10px;
-      margin: 5px;
-      font-size: 16px;
-      border-radius: 8px;
-    }
-    input[type="text"] {
-      width: 280px;
-      border: 2px solid #d60000;
-    }
-    button {
-      background-color: #d60000;
-      color: #fff;
-      border: none;
-      cursor: pointer;
-    }
-    .hidden {
-      display: none;
-    }
-    .category {
-      margin: 20px auto;
-      padding: 15px;
-      border-radius: 12px;
-      background-color: #fff;
-      width: 95%;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    .category h2 {
-      margin: 0;
-      padding: 10px;
-      border-radius: 8px;
-      color: #fff;
-    }
-    .numbers {
-      margin-top: 15px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .number {
-      display: inline-block;
-      margin: 6px;
-      padding: 10px;
+      width: 60%;
       border: 1px solid #ccc;
       border-radius: 8px;
-      background-color: #ffeaea;
       font-size: 16px;
-      font-weight: bold;
-      color: #333;
-      width: 160px;
-      position: relative;
     }
-    .number::before {
-      content: "★";
-      color: gold;
-      font-size: 18px;
-      position: absolute;
-      left: 8px;
-      top: 5px;
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
     }
-    /* ألوان مختلفة لكل فئة */
-    .f50 h2 { background-color: #ff9999; }
-    .f100 h2 { background-color: #99ccff; }
-    .f250 h2 { background-color: #99ff99; }
-    .f500 h2 { background-color: #ffcc99; }
-    .f1m h2 { background-color: #cc99ff; }
-    .f2m h2 { background-color: #66cccc; }
-    .f35m h2 { background-color: #ffcc00; }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 20px;
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card h2 {
+      color: #e63946;
+      margin-bottom: 10px;
+    }
+    .numbers {
+      list-style: none;
+      padding: 0;
+    }
+    .numbers li {
+      padding: 5px 0;
+      border-bottom: 1px solid #eee;
+    }
   </style>
 </head>
 <body>
   <h1>الأرقام المميزة - آسياسيل</h1>
-
-  <!-- تحقق برقم الهاتف -->
-  <input type="text" id="phoneInput" placeholder="أدخل رقم هاتفك">
-  <button onclick="verifyPhone()">دخول</button>
-  <p id="errorMsg" style="color:red;"></p>
-
-  <!-- المحتوى مخفي حتى التحقق -->
-  <div id="content" class="hidden">
-
-    <!-- مربع البحث -->
-    <input type="text" id="searchBox" placeholder="ابحث عن رقم..." onkeyup="searchNumbers()">
-
-    <!-- فئة 50 ألف -->
-    <div class="category f50">
+  <div class="search-box">
+    <input type="text" id="search" placeholder="ابحث عن رقم...">
+  </div>
+  <div class="categories" id="categories">
+    <div class="card">
       <h2>فئة 50,000 دينار</h2>
-      <div class="numbers">
-        <div class="number">7766600049</div>
-        <div class="number">7766600034</div>
-        <div class="number">7766600058</div>
-        <div class="number">7755550079</div>
-        <div class="number">7755533382</div>
-        <!-- باقي الأرقام الكاملة هنا -->
-      </div>
+      <ul class="numbers">
+        <li>0770 500 0001</li>
+        <li>0770 500 0002</li>
+        <li>0770 500 0003</li>
+      </ul>
     </div>
-
-    <!-- فئة 100 ألف -->
-    <div class="category f100">
+    <div class="card">
       <h2>فئة 100,000 دينار</h2>
-      <div class="numbers">
-        <div class="number">0771 111 2222</div>
-        <div class="number">0771 333 4444</div>
-      </div>
+      <ul class="numbers">
+        <li>0770 100 0001</li>
+        <li>0770 100 0002</li>
+      </ul>
     </div>
-
-    <!-- باقي الفئات بنفس الشكل -->
+    <div class="card">
+      <h2>فئة 250,000 دينار</h2>
+      <ul class="numbers">
+        <li>0770 250 0001</li>
+        <li>0770 250 0002</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>فئة 500,000 دينار</h2>
+      <ul class="numbers">
+        <li>0770 500 0001</li>
+        <li>0770 500 0002</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>فئة 1,000,000 دينار</h2>
+      <ul class="numbers">
+        <li>0770 111 0001</li>
+        <li>0770 111 0002</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>فئة 2,000,000 دينار</h2>
+      <ul class="numbers">
+        <li>0770 222 0001</li>
+        <li>0770 222 0002</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>فئة 3,500,000 دينار</h2>
+      <ul class="numbers">
+        <li>0770 350 0001</li>
+        <li>0770 350 0002</li>
+      </ul>
+    </div>
   </div>
 
   <script>
-    function verifyPhone() {
-      const phone = document.getElementById("phoneInput").value.trim();
-      const errorMsg = document.getElementById("errorMsg");
-      const content = document.getElementById("content");
-
-      // تحقق: يبدأ بـ 07 وطوله 11 رقم
-      const regex = /^07\d{9}$/;
-      if (regex.test(phone)) {
-        errorMsg.textContent = "";
-        content.classList.remove("hidden");
-      } else {
-        errorMsg.textContent = "الرجاء إدخال رقم هاتف صحيح يبدأ بـ 07 ويتكون من 11 رقم.";
-        content.classList.add("hidden");
-      }
-    }
-
-    function searchNumbers() {
-      const input = document.getElementById("searchBox").value.toLowerCase();
-      const allNumbers = document.getElementsByClassName("number");
-      for (let i = 0; i < allNumbers.length; i++) {
-        const num = allNumbers[i].textContent.toLowerCase();
-        allNumbers[i].style.display = num.includes(input) ? "inline-block" : "none";
-      }
-    }
+    const searchInput = document.getElementById('search');
+    searchInput.addEventListener('keyup', function() {
+      const filter = searchInput.value.toLowerCase();
+      const numbers = document.querySelectorAll('.numbers li');
+      numbers.forEach(num => {
+        if (num.textContent.toLowerCase().includes(filter)) {
+          num.style.display = '';
+        } else {
+          num.style.display = 'none';
+        }
+      });
+    });
   </script>
 </body>
 </html>
-
