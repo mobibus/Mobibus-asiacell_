@@ -1,42 +1,51 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>اختيار رقمك - آسياسيل</title>
+  <title>جهاز اختيار الأرقام - آسياسيل</title>
   <style>
     body {
       font-family: 'Tahoma', sans-serif;
-      background: #f8f9fa;
+      background: linear-gradient(to bottom, #ffffff, #ffe5e5);
       margin: 0;
-      padding: 20px;
+      padding: 0;
       direction: rtl;
+    }
+    .device {
+      width: 400px;
+      margin: 30px auto;
+      border: 2px solid #ccc;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      overflow: hidden;
+      background: #f8f9fa;
     }
     header {
       text-align: center;
       background: #d60000;
       padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 20px;
     }
     header img {
-      width: 200px;
+      width: 150px;
     }
     h1 {
       text-align: center;
       color: #d60000;
+      font-size: 18px;
+      margin: 10px 0;
     }
     .options {
       display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin: 20px 0;
+      justify-content: space-around;
+      padding: 10px;
     }
     .option {
       background: #fff;
       border: 1px solid #ccc;
-      padding: 10px 20px;
+      padding: 8px 12px;
       border-radius: 8px;
       cursor: pointer;
+      font-size: 14px;
       transition: 0.3s;
     }
     .option:hover {
@@ -45,130 +54,86 @@
     }
     .search-box {
       text-align: center;
-      margin: 20px 0;
+      margin: 10px;
     }
     input {
-      padding: 10px;
-      width: 60%;
+      padding: 8px;
+      width: 70%;
       border: 1px solid #ccc;
       border-radius: 8px;
-      font-size: 16px;
+      font-size: 14px;
     }
     button {
-      padding: 10px 20px;
-      margin-left: 10px;
+      padding: 8px 12px;
+      margin-left: 5px;
       background: #d60000;
       color: #fff;
       border: none;
       border-radius: 8px;
       cursor: pointer;
+      font-size: 14px;
     }
     .numbers {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 15px;
-      margin: 20px 0;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      padding: 10px;
     }
     .num-box {
       background: #fff;
       border: 1px solid #ccc;
-      padding: 15px;
+      padding: 10px;
       text-align: center;
       border-radius: 8px;
       cursor: pointer;
       transition: 0.3s;
+      font-size: 14px;
     }
     .num-box:hover {
       background: #ffe5e5;
       border-color: #d60000;
     }
-    .pagination {
-      text-align: center;
-      margin: 20px 0;
-    }
-    .pagination button {
-      margin: 0 5px;
-    }
     .summary {
       background: #fff;
-      border: 1px solid #ccc;
-      padding: 20px;
-      border-radius: 8px;
-      margin-top: 20px;
+      border-top: 2px solid #d60000;
+      padding: 15px;
+      font-size: 14px;
     }
     .summary h2 {
       color: #d60000;
+      font-size: 16px;
     }
     .nav-buttons {
       text-align: center;
-      margin-top: 20px;
+      padding: 10px;
     }
     .nav-buttons button {
-      margin: 0 10px;
+      margin: 0 5px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <img src="asiacell-logo.png" alt="Asiacell Logo">
-  </header>
-  <h1>اختيار رقمك المميز</h1>
+  <div class="device">
+    <header>
+      <img src="asiacell-logo.png" alt="Asiacell Logo">
+    </header>
+    <h1>اختيار رقمك المميز</h1>
 
-  <div class="options">
-    <div class="option">REGULAR LINE</div>
-    <div class="option">SILVER</div>
-    <div class="option">GOLD</div>
-    <div class="option">GOLD+</div>
-  </div>
+    <div class="options">
+      <div class="option">REGULAR</div>
+      <div class="option">SILVER</div>
+      <div class="option">GOLD</div>
+      <div class="option">GOLD+</div>
+    </div>
 
-  <div class="search-box">
-    <input type="text" id="search" placeholder="أدخل 4 إلى 10 أرقام...">
-    <button onclick="searchNumbers()">بحث</button>
-  </div>
+    <div class="search-box">
+      <input type="text" id="search" placeholder="أدخل 4 إلى 10 أرقام...">
+      <button onclick="searchNumbers()">بحث</button>
+    </div>
 
-  <div class="numbers" id="numbers">
-    <div class="num-box" onclick="selectNumber('7714736506')">7714736506</div>
-    <div class="num-box" onclick="selectNumber('7714736941')">7714736941</div>
-    <div class="num-box" onclick="selectNumber('7714737582')">7714737582</div>
-    <div class="num-box" onclick="selectNumber('7715231635')">7715231635</div>
-    <div class="num-box" onclick="selectNumber('7715231637')">7715231637</div>
-    <div class="num-box" onclick="selectNumber('7715231650')">7715231650</div>
-  </div>
-
-  <div class="pagination">
-    <button>1</button>
-    <button>2</button>
-    <button>3</button>
-  </div>
-
-  <div class="summary" id="summary">
-    <h2>ملخص الطلب</h2>
-    <p>الرقم: <span id="selectedNumber">لم يتم اختيار رقم</span></p>
-    <p>السعر: 0 دينار</p>
-    <p>رسوم الحجز: 0 دينار</p>
-    <p>المجموع: 0 دينار</p>
-  </div>
-
-  <div class="nav-buttons">
-    <button>BACK</button>
-    <button>CONTINUE</button>
-  </div>
-
-  <script>
-    function selectNumber(num) {
-      document.getElementById('selectedNumber').textContent = num;
-    }
-    function searchNumbers() {
-      const filter = document.getElementById('search').value;
-      const boxes = document.querySelectorAll('.num-box');
-      boxes.forEach(box => {
-        if (box.textContent.includes(filter)) {
-          box.style.display = '';
-        } else {
-          box.style.display = 'none';
-        }
-      });
-    }
-  </script>
-</body>
-</html>
+    <div class="numbers" id="numbers">
+      <div class="num-box" onclick="selectNumber('7714736506')">7714736506</div>
+      <div class="num-box" onclick="selectNumber('7714736941')">7714736941</div>
+      <div class="num-box" onclick="selectNumber('7714737582')">7714737582</div>
+      <div class="num-box" onclick="selectNumber('7715231635')">7715231635</div>
+      <div class="num-box" onclick="selectNumber('7715231637')">7715231637</div>
