@@ -1,212 +1,253 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أرقام مميزة - Mobibus</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+import 'package:flutter/material.dart';
 
-    <style>
-        :root {
-            --primary-dark: #0b0f19;
-            --card-bg: #161b26;
-            --accent-gold: #ffb703;
-            --accent-blue: #219ebc;
-            --text-light: #f8fafc;
-            --text-muted: #64748b;
-            --border-glow: rgba(255, 183, 3, 0.2);
-        }
+void main() {
+  runApp(const VIPNumbersApp());
+}
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Cairo', sans-serif;
-        }
+class VIPNumbersApp extends StatelessWidget {
+  const VIPNumbersApp({Key? key}) : super(key: key);
 
-        body {
-            background-color: var(--primary-dark);
-            color: var(--text-light);
-            padding: 20px;
-            min-height: 100vh;
-        }
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'متجر MobiBus للأرقام المميزة',
+      theme: ThemeData(
+        primarySwatch: Colors.indigo,
+        scaffoldBackgroundColor: const Color(0xFFF8F9FA),
+      ),
+      home: const VIPNumbersScreen(),
+    );
+  }
+}
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+class VIPNumbersScreen extends StatefulWidget {
+  const VIPNumbersScreen({Key? key}) : super(key: key);
 
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 20px 0;
-        }
+  @override
+  State<VIPNumbersScreen> createState() => _VIPNumbersScreenState();
+}
 
-        header h1 {
-            color: var(--accent-gold);
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
+class _VIPNumbersScreenState extends State<VIPNumbersScreen> {
+  List<Map<String, dynamic>> allVipNumbers = [];
+  List<Map<String, dynamic>> filteredNumbers = [];
+  String selectedFilter = "الكل";
+  TextEditingController searchController = TextEditingController();
 
-        header p {
-            color: var(--text-muted);
-        }
+  // ✨ الأرقام الـ 110 المستخرجة بدقة كاملة من صور القوائم الخاصة بك (الفئة الذهبية بسعر 50 ألف)
+  final List<String> rawGoldNumbers = [
+    "07755556673", "07755553319", "07755551149", "07755558575", "07755554469",
+    "07755556678", "07755553346", "07760000136", "07755558803", "07755554487",
+    "07755556689", "07755553381", "07760000259", "07755558810", "07755556624",
+    "07755556691", "07755551106", "07760000273", "07755558812", "07760000417",
+    "07755557505", "07755551130", "07760000317", "07760000923", "07760000427",
+    "07755557724", "07755551164", "07760000324", "07760000926", "07760000428",
+    "07755557782", "07755551169", "07760000325", "07760000928", "07760000436",
+    "07755558871", "07755551197", "07760000352", "07760000938", "07760000438",
+    "07755559535", "07755551535", "07760000357", "07760000942", "07760000457",
+    "07755559577", "07760000798", "07755557768", "07760000645", "07760000973",
+    "07755559932", "07760000812", "07755558565", "07760000648", "07760000983",
+    "07755559937", "07760000814", "07755558814", "07760000652", "07760000986",
+    "07755550046", "07760000821", "07755558824", "07760000684", "07760000145",
+    "07755550084", "07760000423", "07755558839", "07760000713", "07760000154",
+    "07755551102", "07760000538", "07755558861", "07760000726", "07760000158",
+    "07760000183", "07755558896", "07760000278", "07760000174", "07760000236",
+    "07760000186", "07760000572", "07755558897", "07760000281", "07760000245",
+    "07760000198", "07755559947", "07760000289", "07760000241", "07760000254",
+    "07760000215", "07760000574", "07755559972", "07760000294", "07760000374",
+    "07760000219", "07755559978", "07760000315", "07760000251", "07760000387",
+    "07760000235", "07760000583", "07755550012", "07760000316", "07760000823",
+    "07760000429", "07755550067", "07760000326", "07760000256", "07760000835"
+  ];
 
-        /* خانة البحث */
-        .search-container {
-            position: relative;
-            max-width: 600px;
-            margin: 0 auto 30px auto;
-        }
+  @override
+  void initState() {
+    super.initState();
+    generateAndLoadNumbers();
+  }
 
-        .search-input {
-            width: 100%;
-            padding: 15px 20px;
-            background-color: var(--card-bg);
-            border: 2px solid transparent;
-            border-radius: 50px;
-            color: var(--text-light);
-            font-size: 1.1rem;
-            outline: none;
-            transition: all 0.3s ease;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
+  void generateAndLoadNumbers() {
+    List<Map<String, dynamic>> temp = [];
 
-        .search-input:focus {
-            border-color: var(--accent-gold);
-            box-shadow: 0 0 15px var(--border-glow);
-        }
+    // 1. إضافة أرقامك الذهبية المستخرجة
+    for (String num in rawGoldNumbers) {
+      temp.add({
+        "number": num,
+        "price": "50,000 د.ع",
+        "type": "ذهبي",
+        "color": Colors.amber[700]
+      });
+    }
 
-        /* شبكة الأرقام */
-        .numbers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
+    // 2. توليد عينات للفئات الأخرى لتجربة التنقل (بلاتيني بـ مليون ونص وفضي بـ 25 ألف)
+    for (int i = 1; i <= 20; i++) {
+      temp.add({
+        "number": "0770000${i.toString().padLeft(4, '0')}",
+        "price": "1,500,000 د.ع",
+        "type": "بلاتيني",
+        "color": Colors.purple
+      });
+    }
 
-        .number-card {
-            background-color: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+    for (int i = 1; i <= 30; i++) {
+      temp.add({
+        "number": "0772222${i.toString().padLeft(4, '0')}",
+        "price": "25,000 د.ع",
+        "type": "فضي",
+        "color": Colors.blueGrey
+      });
+    }
 
-        .number-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-            border-color: var(--accent-blue);
-        }
+    setState(() {
+      allVipNumbers = temp;
+      filteredNumbers = temp; // القائمة الافتراضية تعرض الكل
+    });
+  }
 
-        .phone-number {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--text-light);
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-            direction: ltr;
-        }
+  // 🔍 دالة التصفية والبحث المشترك الفوري
+  void filterSearchResults(String query) {
+    setState(() {
+      filteredNumbers = allVipNumbers.where((item) {
+        bool matchesSearch = item['number'].contains(query);
+        bool matchesFilter = selectedFilter == "الكل" || item['type'] == selectedFilter;
+        return matchesSearch && matchesFilter;
+      }).toList();
+    });
+  }
 
-        .operator {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            background-color: rgba(33, 158, 188, 0.2);
-            color: var(--accent-blue);
-            margin-bottom: 15px;
-        }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('متجر الأرقام المميزة (MobiBus)', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+        backgroundColor: Colors.indigo[900],
+        centerTitle: true,
+        elevation: 0,
+      ),
+      body: Directionality(
+        textDirection: TextDirection.rtl,
+        child: Column(
+          children: [
+            // تصميم واجهة البحث والفلاتر في الأعلى بصورة احترافية
+            Container(
+              padding: const EdgeInsets.only(bottom: 12, left: 12, right: 12, top: 8),
+              decoration: BoxDecoration(
+                color: Colors.indigo[900],
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                ),
+              ),
+              child: Column(
+                children: [
+                  // خانة البحث الرقمي
+                  TextField(
+                    controller: searchController,
+                    onChanged: filterSearchResults,
+                    keyboardType: TextInputType.phone,
+                    decoration: InputDecoration(
+                      hintText: "ابحث عن رقم معين...",
+                      prefixIcon: const Icon(Icons.search, color: Colors.indigo),
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding: const EdgeInsets.symmetric(vertical: 0),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  // أزرار الاختيار (Chips) بين الفئات المختلفة
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: ["الكل", "بلاتيني", "ذهبي", "فضي"].map((category) {
+                        bool isSelected = selectedFilter == category;
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                          child: ChoiceChip(
+                            label: Text(category),
+                            selected: isSelected,
+                            selectedColor: Colors.white,
+                            backgroundColor: Colors.indigo[700],
+                            labelStyle: TextStyle(
+                              color: isSelected ? Colors.indigo[900] : Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            onSelected: (bool selected) {
+                              setState(() {
+                                selectedFilter = category;
+                                filterSearchResults(searchController.text);
+                              });
+                            },
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
 
-        .price {
-            font-size: 1.3rem;
-            color: var(--accent-gold);
-            font-weight: 600;
-        }
+            const SizedBox(height: 8),
 
-        .no-results {
-            text-align: center;
-            color: var(--text-muted);
-            grid-column: 1 / -1;
-            padding: 40px;
-            font-size: 1.2rem;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="container">
-        <header>
-            <h1>Mobibus</h1>
-            <p>منصتك لاختيار الأرقام المميزة لجميع الشبكات</p>
-        </header>
-
-        <div class="search-container">
-            <input type="text" id="searchInput" class="search-input" placeholder="ابحث عن رقم معين أو شبكة...">
-        </div>
-
-        <div class="numbers-grid" id="numbersGrid">
-            </div>
-    </div>
-
-    <script>
-        // مصفوفة تحتوي على البيانات (يمكنك التعديل عليها وإضافة أرقامك)
-        const phoneNumbers = [
-            { number: "0770 123 4567", operator: "آسيا سيل", price: "50" },
-            { number: "0780 999 8888", operator: "اسياسيل", price: "50" },
-            { number: "0750 111 2222", operator: "اسياسيل", price: "$250" },
-            { number: "0771 555 6666", operator: "آسيا سيل", price: "$300" },
-            { number: "0781 000 0000", operator: "اسياسيل", price: "$            { number: "0770 348 4567", operator: "آسيا سيل", price: "50" },
-{ number: "0770 767 4567", operator: "آسيا سيل", price: "50" },
-           { number: "0770 676 4567", operator: "آسيا سيل", price: "50" },
-
-        const numbersGrid = document.getElementById('numbersGrid');
-        const searchInput = document.getElementById('searchInput');
-
-        // دالة لعرض الأرقام في الصفحة
-        function displayNumbers(data) {
-            numbersGrid.innerHTML = '';
-            
-            if (data.length === 0) {
-                numbersGrid.innerHTML = '<div class="no-results">عذراً، لم يتم العثور على أرقام مطابقة.</div>';
-                return;
-            }
-
-            data.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'number-card';
-                card.innerHTML = `
-                    <div class="phone-number">${item.number}</div>
-                    <div class="operator">${item.operator}</div>
-                    <div class="price">${item.price}</div>
-                `;
-                numbersGrid.appendChild(card);
-            });
-        }
-
-        // تفعيل فلتر البحث عند الكتابة
-        searchInput.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase().replace(/\s+/g, '');
-            
-            const filtered = phoneNumbers.filter(item => {
-                const cleanNumber = item.number.replace(/\s+/g, '');
-                const matchesNumber = cleanNumber.includes(searchTerm);
-                const matchesOperator = item.operator.toLowerCase().includes(searchTerm);
-                return matchesNumber || matchesOperator;
-            });
-            
-            displayNumbers(filtered);
-        });
-
-        // عرض الأرقام لأول مرة عند تحميل الصفحة
-        displayNumbers(phoneNumbers);
-    </script>
-
-</body>
-</html>
+            // قائمة العرض الذكية للأرقام
+            Expanded(
+              child: filteredNumbers.isEmpty
+                  ? const Center(child: Text("لا توجد أرقام تطابق خيارات البحث", style: TextStyle(fontSize: 16)))
+                  : ListView.builder(
+                      padding: const EdgeInsets.all(10),
+                      itemCount: filteredNumbers.length,
+                      itemBuilder: (context, index) {
+                        final item = filteredNumbers[index];
+                        return Card(
+                          elevation: 2,
+                          margin: const EdgeInsets.symmetric(vertical: 6),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                          child: ListTile(
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                            leading: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                              decoration: BoxDecoration(
+                                color: item['color'].withOpacity(0.15),
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: item['color'], width: 1.5),
+                              ),
+                              child: Text(
+                                item['type'],
+                                style: TextStyle(color: item['color'], fontWeight: FontWeight.bold, fontSize: 13),
+                              ),
+                            ),
+                            title: Text(
+                              item['number'],
+                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, letterSpacing: 0.5),
+                            ),
+                            subtitle: Text(
+                              item['price'],
+                              style: const TextStyle(fontSize: 15, color: Colors.green, fontWeight: FontWeight.bold),
+                            ),
+                            trailing: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.indigo[900],
+                                foregroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                              ),
+                              onPressed: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('تم اختيار الرقم: ${item['number']}')),
+                                );
+                              },
+                              child: const Text('حجز'),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
