@@ -6,7 +6,7 @@
   <style>
     body {
       font-family: 'Tahoma', sans-serif;
-      background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+      background: linear-gradient(to bottom, #ffffff, #ffe5e5);
       margin: 0;
       padding: 20px;
       direction: rtl;
@@ -14,13 +14,17 @@
     header {
       text-align: center;
       margin-bottom: 20px;
+      background: #d60000;
+      padding: 15px;
+      border-radius: 8px;
     }
     header img {
-      width: 200px;
+      width: 220px;
     }
     h1 {
       text-align: center;
       color: #d60000;
+      margin-top: 10px;
     }
     .search-box {
       text-align: center;
@@ -41,12 +45,13 @@
     .card {
       background: #fff;
       border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
       padding: 20px;
-      transition: transform 0.2s;
+      transition: transform 0.3s, box-shadow 0.3s;
     }
     .card:hover {
-      transform: translateY(-5px);
+      transform: translateY(-8px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.25);
     }
     .card h2 {
       margin-bottom: 10px;
