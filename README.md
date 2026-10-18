@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>تجديد باقات خط الفاتورة Elite — آسياسييل</title>
+<title>باقات خط الفاتورة Elite وتفاصيل الخطوط المضافة — آسياسييل</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -34,8 +34,18 @@
 body { font-family: 'Cairo', sans-serif; color: var(--text-main); background: linear-gradient(135deg, var(--bg-dark-1), var(--bg-dark-2)); min-height: 100vh; padding: 20px 12px; }
 .container { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
 
-/* Header */
 header { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; border-radius: 20px; background: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: var(--card-shadow); backdrop-filter: blur(12px); }
-.brand { display: flex; align-items: center; gap: 10px; }
 .brand-title { font-size: 22px; font-weight: 900; color: var(--red-main); }
-.theme-btn { padding: 8px 16px; border-radius: 12px; background: var(--glass-bg); border: 1px solid var
+.theme-btn { padding: 8px 16px; border-radius: 12px; background: var(--glass-bg); border: 1px solid var(--glass-border); cursor: pointer; font-weight: 700; color: var(--text-main); }
+
+.hero { padding: 32px 20px; border-radius: 24px; background: linear-gradient(135deg, var(--red-dark), var(--red-main)); color: #fff; text-align: center; box-shadow: var(--card-shadow); }
+.hero h1 { font-size: 28px; font-weight: 900; margin-bottom: 10px; }
+.hero p { opacity: 0.95; font-size: 15px; max-width: 750px; margin: 0 auto; line-height: 1.6; }
+
+.section-title { font-size: 22px; font-weight: 800; color: var(--red-main); display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+
+/* Grid Cards */
+.pkg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
+.pkg-card { padding: 24px; border-radius: 24px; background: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: var(--card-shadow); backdrop-filter: blur(10px); display: flex; flex-direction: column; gap: 16px; transition: transform 0.2s; }
+.pkg-card:hover { transform: translateY(-4px); }
+.pkg-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 12px; }
