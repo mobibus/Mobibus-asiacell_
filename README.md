@@ -3,657 +3,190 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>مرتّب المستمسكات الاحترافي — تخصيص محمد جواد</title>
-<!-- Google Fonts: Cairo & Tajawal -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-<!-- jsPDF Library for PDF Export -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
+<title>حجز الأرقام المميزة</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-/* ==========================================================================
-   CSS Variables & Design Tokens (Dark & Light Themes)
-   ========================================================================== */
 :root {
-  --bg-gradient-1: #0f3823;
-  --bg-gradient-2: #071e13;
-  --bg-gradient-3: #1b5e3a;
-  --text-main: #f0fdf4;
-  --text-muted: #a7f3d0;
-  --brand-green: #10b981;
-  --brand-green-dark: #047857;
-  --brand-gold: #f59e0b;
-  --brand-gold-light: #fbbf24;
-  
-  --glass-bg: rgba(6, 44, 27, 0.65);
-  --glass-border: rgba(52, 211, 153, 0.25);
-  --glass-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.37);
-  --card-bg: rgba(15, 61, 39, 0.7);
-  --card-border: rgba(167, 243, 208, 0.2);
-  
-  --blob-1: rgba(16, 185, 129, 0.28);
-  --blob-2: rgba(245, 158, 11, 0.22);
-  --blob-3: rgba(5, 150, 105, 0.3);
-
-  --page-bg: #ffffff;
-  --slot-empty-bg: #f0fdf4;
-  --slot-empty-border: #34d399;
-  --slot-empty-text: #047857;
-
-  box-sizing: border-box;
-}
-
-[data-theme="light"] {
-  --bg-gradient-1: #e8f5e9;
-  --bg-gradient-2: #c8e6c9;
-  --bg-gradient-3: #a5d6a7;
-  --text-main: #064e3b;
-  --text-muted: #047857;
-  --brand-green: #059669;
-  --brand-green-dark: #047857;
-  --brand-gold: #d97706;
-  --brand-gold-light: #f59e0b;
-  
-  --glass-bg: rgba(255, 255, 255, 0.75);
-  --glass-border: rgba(255, 255, 255, 0.9);
-  --glass-shadow: 0 12px 35px 0 rgba(4, 120, 87, 0.15);
-  --card-bg: rgba(255, 255, 255, 0.85);
-  --card-border: rgba(167, 243, 208, 0.5);
-
-  --blob-1: rgba(52, 211, 153, 0.35);
-  --blob-2: rgba(251, 191, 36, 0.3);
-  --blob-3: rgba(16, 185, 129, 0.25);
-
-  --page-bg: #ffffff;
-  --slot-empty-bg: #f4fbf7;
-  --slot-empty-border: #10b981;
-  --slot-empty-text: #047857;
-}
-
-/* Base Styles & Resets */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  -webkit-tap-highlight-color: transparent;
-}
-
-html, body {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  font-family: 'Cairo', 'Tajawal', -apple-system, BlinkMacSystemFont, sans-serif;
-  background-color: #071e13;
-  color: var(--text-main);
-  direction: rtl;
-  user-select: none;
-}
-
-/* Animated Dynamic Background */
-.bg-canvas {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  background: radial-gradient(circle at 85% 15%, var(--bg-gradient-3), transparent 60%),
-              radial-gradient(circle at 15% 85%, var(--bg-gradient-1), transparent 70%),
-              linear-gradient(135deg, var(--bg-gradient-2), var(--bg-gradient-1));
-  overflow: hidden;
-}
-
-.blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(70px);
-  pointer-events: none;
-  animation: floatAnim 18s ease-in-out infinite alternate;
-}
-
-.b1 { width: 320px; height: 320px; top: -80px; right: -80px; background: var(--blob-1); }
-.b2 { width: 380px; height: 380px; bottom: -120px; left: -100px; background: var(--blob-2); animation-delay: -5s; }
-.b3 { width: 250px; height: 250px; top: 40%; left: 30%; background: var(--blob-3); animation-delay: -10s; }
-
-@keyframes floatAnim {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(40px, -30px) scale(1.12); }
-  100% { transform: translate(-30px, 40px) scale(0.95); }
-}
-
-/* Glassmorphism Classes */
-.glass {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-}
-
-/* View Control */
-.view {
-  position: fixed;
-  inset: 0;
-  z-index: 10;
-  display: none;
-  flex-direction: column;
-  padding-top: env(safe-area-inset-top, 0px);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-}
-
-.view.active {
-  display: flex;
-}
-
-/* Typography & Interactive UI Components */
-h1, h2, h3 {
-  font-weight: 800;
-  line-height: 1.2;
-}
-
-button, select, input {
-  font-family: inherit;
-  color: inherit;
-  outline: none;
-  border: none;
-  background: none;
-}
-
-button {
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-button:active {
-  transform: scale(0.96);
-}
-
-/* ==========================================================================
-   Home View Layout
-   ========================================================================== */
-.home-container {
-  margin: auto;
-  width: min(92%, 460px);
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  text-align: center;
-  position: relative;
-  z-index: 2;
-  padding: 20px 0;
-}
-
-/* Animated Card Stack Hero Illustration */
-.hero-stack {
-  position: relative;
-  height: 180px;
-  width: 260px;
-  margin: 0 auto 10px;
-}
-
-.hero-card {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 160px;
-  height: 100px;
-  margin: -50px 0 0 -80px;
-  border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-  padding: 14px;
-  display: flex;
-  gap: 12px;
-  transform: translate(var(--x), var(--y)) rotate(var(--r));
-  animation: cardEntrance 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
-             cardFloat 6s ease-in-out infinite 1s;
-}
-
-.hero-card .avatar {
-  width: 36px;
-  height: 46px;
-  border-radius: 8px;
-  background: currentColor;
-  opacity: 0.35;
-  flex: none;
-}
-
-.hero-card .lines {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding-top: 4px;
-}
-
-.hero-card .lines span {
-  height: 6px;
-  border-radius: 4px;
-  background: currentColor;
-  opacity: 0.35;
-  display: block;
-}
-
-.hero-card .lines span:last-child { width: 60%; }
-
-.hero-card.c1 {
-  --x: -45px; --y: 18px; --r: -14deg;
-  color: #ffffff;
-  background: linear-gradient(135deg, #059669, #10b981);
-}
-
-.hero-card.c2 {
-  --x: 42px; --y: -10px; --r: 12deg;
-  color: #047857;
-  background: linear-gradient(135deg, #ffffff, #d1fae5);
-  animation-delay: 0.15s, -2s;
-}
-
-.hero-card.c3 {
-  --x: 0px; --y: 8px; --r: -2deg;
-  z-index: 2;
-  color: #78350f;
-  background: linear-gradient(135deg, #fef3c7, #f59e0b);
-  animation-delay: 0.3s, -4s;
-}
-
-@keyframes cardEntrance {
-  from { opacity: 0; transform: translate(0, 60px) rotate(0) scale(0.5); }
-}
-
-@keyframes cardFloat {
-  0%, 100% { transform: translate(var(--x), var(--y)) rotate(var(--r)); }
-  50% { transform: translate(var(--x), calc(var(--y) - 8px)) rotate(var(--r)); }
-}
-
-.app-title {
-  font-size: 32px;
-  font-weight: 900;
-  background: linear-gradient(135deg, #34d399, #10b981 50%, #f59e0b);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  letter-spacing: -0.5px;
-}
-
-.app-subtitle {
-  font-size: 15px;
-  color: var(--text-muted);
-  line-height: 1.6;
-  margin-top: -6px;
-}
-
-.btn-card {
-  width: 100%;
-  border-radius: 20px;
-  padding: 18px 20px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  text-align: right;
-  font-size: 17px;
-  font-weight: 700;
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-card.primary {
-  background: linear-gradient(135deg, var(--brand-green-dark), var(--brand-green));
-  color: #ffffff;
-  border-color: rgba(52, 211, 153, 0.4);
-  box-shadow: 0 10px 25px rgba(5, 150, 105, 0.4);
-}
-
-.btn-card.primary::after {
-  content: "";
-  position: absolute;
-  top: 0; bottom: 0; width: 60px; left: -80px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-  transform: skewX(-20deg);
-  animation: shine 4s ease-in-out infinite;
-}
-
-@keyframes shine {
-  0%, 60% { left: -80px; }
-  100% { left: 120%; }
-}
-
-.btn-card .icon-box {
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
-  display: grid;
-  place-items: center;
-  background: rgba(255, 255, 255, 0.2);
-  font-size: 24px;
-  flex: none;
-}
-
-.btn-card small {
-  display: block;
-  font-size: 12px;
-  font-weight: 400;
-  opacity: 0.85;
-  margin-top: 2px;
-}
-
-/* ==========================================================================
-   Editor View Layout
-   ========================================================================== */
-.header-bar {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 12px 14px 0;
-  padding: 8px 12px;
-  border-radius: 20px;
-  z-index: 20;
-}
-
-.header-bar .title {
-  flex: 1;
-  font-weight: 800;
-  font-size: 17px;
-  color: var(--text-main);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.icon-btn {
-  min-width: 42px;
-  height: 42px;
-  border-radius: 14px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid var(--glass-border);
-  color: var(--text-main);
-  font-weight: 700;
-  font-size: 14px;
-  padding: 0 10px;
-}
-
-.icon-btn.accent {
-  background: linear-gradient(135deg, var(--brand-gold), var(--brand-gold-light));
-  color: #3e2404;
-  border-color: rgba(245, 158, 11, 0.5);
-  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
-}
-
-.icon-btn svg {
-  width: 20px;
-  height: 20px;
-  stroke: currentColor;
-  fill: none;
-  stroke-width: 2.2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-/* Dropdown Menu Popups */
-.dropdown-pop {
-  position: absolute;
-  top: 65px;
-  min-width: 200px;
-  border-radius: 18px;
-  padding: 8px;
-  z-index: 50;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-  animation: popDown 0.2s ease-out;
-}
-
-.dropdown-pop[hidden] { display: none; }
-
-.dropdown-pop button {
-  padding: 10px 14px;
-  text-align: right;
-  border-radius: 12px;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-main);
-}
-
-.dropdown-pop button:hover, .dropdown-pop button.active {
-  background: var(--brand-green);
-  color: #ffffff;
-}
-
-@keyframes popDown {
-  from { opacity: 0; transform: translateY(-10px) scale(0.95); }
-}
-
-/* Paper Page Area Scrollable */
-.scroll-area {
-  flex: 1;
-  overflow-y: auto;
-  padding: 16px 14px 260px;
-  -webkit-overflow-scrolling: touch;
-  background-image: radial-gradient(rgba(52, 211, 153, 0.15) 1.2px, transparent 1.2px);
-  background-size: 20px 20px;
-}
-
-.page-paper {
-  position: relative;
-  width: min(100%, 580px);
-  margin: 0 auto 8px;
-  background: var(--page-bg);
-  border-radius: 4px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
-  overflow: hidden;
-  transition: height 0.2s ease;
-}
-
-.page-label {
-  width: min(100%, 580px);
-  margin: 0 auto 18px;
-  text-align: center;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-muted);
-}
-
-/* Slots for documents inside paper */
-.doc-slot {
-  position: absolute;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  cursor: pointer;
-  transition: outline 0.15s ease, transform 0.15s ease;
-}
-
-.doc-slot.empty {
-  border: 2px dashed var(--slot-empty-border);
-  background-color: var(--slot-empty-bg);
-  display: grid;
-  place-items: center;
-  color: var(--slot-empty-text);
-  font-weight: 700;
-  font-size: clamp(11px, 2.8vw, 15px);
-  border-radius: calc(var(--u) * 2);
-  text-align: center;
-  padding: 4px;
-}
-
-.doc-slot.selected {
-  outline: 3px solid #10b981;
-  outline-offset: 3px;
-  z-index: 5;
-}
-
-.page-hint {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #6b7280;
-  padding: 20px;
-  text-align: center;
-  font-size: 15px;
-  line-height: 1.8;
-  pointer-events: none;
-}
-
-/* Floating Bottom Control Dock */
-.bottom-dock {
-  position: fixed;
-  left: 0; right: 0; bottom: 0;
-  padding: 0 12px calc(12px + env(safe-area-inset-bottom, 0px));
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  z-index: 30;
-  pointer-events: none;
-}
-
-.bottom-dock > * { pointer-events: auto; }
-
-.controls-sheet {
-  border-radius: 24px;
-  padding: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  max-height: 50vh;
-  overflow-y: auto;
-  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.controls-sheet[hidden] { display: none; }
-
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(30px); }
-}
-
-.sheet-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-weight: 800;
-  font-size: 15px;
-}
-
-.btn-row {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.btn-row > * { flex: 1 1 auto; }
-
-.chip-btn {
-  padding: 10px 12px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid var(--glass-border);
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-main);
-  white-space: nowrap;
-  text-align: center;
-}
-
-.chip-btn.active {
-  background: var(--brand-green);
-  color: #ffffff;
-  border-color: transparent;
-}
-
-.chip-btn.danger {
-  color: #ef4444;
-  border-color: rgba(239, 68, 68, 0.3);
-}
-
-.select-custom {
-  width: 100%;
-  padding: 10px 12px;
-  border-radius: 12px;
-  border: 1px solid var(--glass-border);
-  background: var(--glass-bg);
-  color: var(--text-main);
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.select-custom option, .select-custom optgroup {
-  color: #064e3b;
-  background: #ffffff;
-}
-
-.range-label {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.range-label input[type=range] {
-  flex: 1;
-  accent-color: var(--brand-green);
-}
-
-/* Export Bar Horizontally Scrollable */
-.export-bar {
-  border-radius: 20px;
-  padding: 8px;
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.export-bar::-webkit-scrollbar { display: none; }
-
-.exp-chip {
-  flex: none;
-  padding: 12px 16px;
-  border-radius: 14px;
-  font-weight: 700;
-  font-size: 13px;
-  background: linear-gradient(135deg, var(--brand-green), var(--brand-green-dark));
-  color: #ffffff;
-  white-space: nowrap;
-  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
-}
-
-.exp-chip.outline {
-  background: rgba(255, 255, 255, 0.12);
-  color: var(--text-main);
-  border: 1px solid var(--glass-border);
-  box-shadow: none;
-}
-
-.exp-chip.gold {
-  background: linear-gradient(135deg, var(--brand-gold-light), var(--brand-gold));
-  color: #3e2404;
-}
-
-/* ==========================================================================
-   Modals (About & Interactive Crop Modal)
-   ========================================================================== */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  background: rgba(0, 0, 0, 0.75);
-  display: grid;
-  place-items: center;
-  padding: 16px;
-  backdrop-filter: blur(8px);
-}
-
-.modal-overlay[hidden] { display: none; }
-
-.modal-box {
-  width: min(100%, 440px);
-  border-radius: 28px;
-  padding: 24px;
-  background: var(--bg-gradient-2);
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  --bg1: #061a12;
+  --bg2: #0b2e20;
+  --ink: #e8f5ee;
+  --mut: #9cc7b2;
+  --g: #10b981;
+  --g2: #059669;
+  --gold: #f59e0b;
+  --glass: rgba(255, 255, 255, 0.07);
+  --bd: rgba(255, 255, 255, 0.15);
+  --sh: 0 10px 30px rgba(0,0,0,0.4);
+}
+[data-t=light] {
+  --bg1: #f0fdf4;
+  --bg2: #dcfce7;
+  --ink: #064e3b;
+  --mut: #047857;
+  --glass: rgba(255, 255, 255, 0.8);
+  --bd: rgba(16, 185, 129, 0.2);
+  --sh: 0 10px 30px rgba(16, 185, 129, 0.15);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Cairo',sans-serif;color:var(--ink);background:linear-gradient(135deg,var(--bg1),var(--bg2));min-height:100vh;padding:20px}
+.container{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+header{display:flex;justify-content:space-between;align-items:center;padding:15px 24px;border-radius:20px;background:var(--glass);border:1px solid var(--bd);box-shadow:var(--sh);backdrop-filter:blur(12px)}
+h1{font-size:24px;font-weight:900;background:linear-gradient(90deg,var(--g),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.theme-btn{padding:8px 16px;border-radius:12px;background:var(--glass);border:1px solid var(--bd);cursor:pointer;font-weight:700;color:var(--ink)}
+.hero-card{padding:30px;border-radius:24px;background:linear-gradient(135deg,var(--g2),var(--g));color:#fff;text-align:center;box-shadow:var(--sh)}
+.hero-card h2{font-size:28px;margin-bottom:8px}
+.hero-card p{opacity:0.9;font-size:15px}
+.filters{display:flex;gap:12px;flex-wrap:wrap}
+.filters input,.filters select{flex:1;min-width:200px;padding:12px 16px;border-radius:14px;border:1px solid var(--bd);background:var(--glass);color:var(--ink);font-size:15px;font-weight:600}
+.filters input::placeholder{color:var(--mut)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.number-card{padding:20px;border-radius:20px;background:var(--glass);border:1px solid var(--bd);box-shadow:var(--sh);backdrop-filter:blur(10px);display:flex;flex-direction:column;gap:12px;transition:transform 0.2s}
+.number-card:hover{transform:translateY(-4px)}
+.num-badge{font-size:24px;font-weight:900;letter-spacing:1px;color:var(--gold);direction:ltr;text-align:right}
+.num-info{display:flex;justify-content:space-between;font-size:13px;color:var(--mut);font-weight:600}
+.price{font-size:18px;font-weight:800;color:var(--ink)}
+.reserve-btn{padding:10px;border-radius:12px;background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;font-weight:700;border:none;cursor:pointer;transition:opacity 0.2s}
+.reserve-btn:active{transform:scale(0.97)}
+/* Modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(6px);display:grid;place-items:center;padding:16px;z-index:100}
+.modal[hidden]{display:none}
+.modal-box{width:min(100%,400px);padding:24px;border-radius:24px;background:var(--bg1);border:1px solid var(--bd);box-shadow:var(--sh);display:flex;flex-direction:column;gap:14px}
+.modal-box h3{color:var(--g)}
+.modal-box input{width:100%;padding:12px;border-radius:12px;border:1px solid var(--bd);background:var(--glass);color:var(--ink);font-weight:600}
+.modal-actions{display:flex;gap:10px}
+.modal-actions button{flex:1;padding:10px;border-radius:12px;font-weight:700;cursor:pointer}
+.btn-submit{background:var(--g);color:#fff;border:none}
+.btn-cancel{background:transparent;border:1px solid var(--bd);color:var(--ink)}
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#064e3b;color:#fff;padding:10px 20px;border-radius:14px;font-weight:700;box-shadow:var(--sh);z-index:200}
+.toast[hidden]{display:none}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>نظام حجز الأرقام المميزة</h1>
+    <button class="theme-btn" id="themeToggle">🌓 المظهر</button>
+  </header>
+
+  <div class="hero-card">
+    <h2>اختر رقمك المميز بكل سهولة</h2>
+    <p>تصفح الأرقام المتاحة، اختر الرقم المناسب، واحتجزه خلال ثوانٍ معدودة قبل نفاذه.</p>
+  </div>
+
+  <div class="filters">
+    <input type="text" id="searchInput" placeholder="ابحث برقم معين (مثلاً: 770 أو 780)...">
+    <select id="catSelect">
+      <option value="all">جميع الفئات</option>
+      <option value="gold">أرقام ذهبية</option>
+      <option value="silver">أرقام فضية</option>
+      <option value="normal">أرقام مميزة عادية</option>
+    </select>
+  </div>
+
+  <div class="grid" id="numbersGrid"></div>
+</div>
+
+<!-- Modal الحجز -->
+<div class="modal" id="reserveModal" hidden>
+  <div class="modal-box">
+    <h3>تأكيد حجز الرقم</h3>
+    <p id="selectedNumText" style="font-weight: 700; font-size: 18px; direction: ltr; text-align: right;"></p>
+    <input type="text" id="clientName" placeholder="الاسم الكامل">
+    <input type="tel" id="clientPhone" placeholder="رقم الهاتف للتواصل">
+    <div class="modal-actions">
+      <button class="btn-submit" id="confirmReserve">تأكيد الحجز</button>
+      <button class="btn-cancel" id="closeModal">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+// بيانات تجريبية للأرقام المميزة
+const numbersData = [
+  { id: 1, number: '0780 999 1122', cat: 'gold', price: '150,000 د.ع', status: 'available' },
+  { id: 2, number: '0771 555 4433', cat: 'silver', price: '75,000 د.ع', status: 'available' },
+  { id: 3, number: '0750 333 8899', cat: 'gold', price: '200,000 د.ع', status: 'available' },
+  { id: 4, number: '0790 123 4567', cat: 'normal', price: '45,000 د.ع', status: 'available' },
+  { id: 5, number: '0782 777 0011', cat: 'silver', price: '90,000 د.ع', status: 'available' },
+  { id: 6, number: '0770 888 2233', cat: 'gold', price: '180,000 د.ع', status: 'available' }
+];
+
+let currentSelectedNum = null;
+
+function renderNumbers() {
+  const keyword = $('searchInput').value.trim();
+  const cat = $('catSelect').value;
+  const grid = $('numbersGrid');
+  grid.innerHTML = '';
+
+  const filtered = numbersData.filter(item => {
+    const matchKey = item.number.includes(keyword);
+    const matchCat = (cat === 'all' || item.cat === cat);
+    return matchKey && matchCat;
+  });
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--mut);">لا توجد أرقام مطابقة للبحث</p>';
+    return;
+  }
+
+  filtered.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'number-card';
+    card.innerHTML = `
+      <div class="num-badge">${item.number}</div>
+      <div class="num-info">
+        <span>الفئة: ${item.cat === 'gold' ? 'ذهبية 🌟' : item.cat === 'silver' ? 'فضية 🥈' : 'مميزة'}</span>
+        <span class="price">${item.price}</span>
+      </div>
+      <button class="reserve-btn" onclick="openModal(${item.id})">حجز الرقم</button>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function showToast(msg) {
+  const t = $('toast');
+  t.textContent = msg;
+  t.hidden = false;
+  setTimeout(() => t.hidden = true, 3000);
+}
+
+window.openModal = function(id) {
+  currentSelectedNum = numbersData.find(n => n.id === id);
+  $('selectedNumText').textContent = 'الرقم المختار: ' + currentSelectedNum.number;
+  $('clientName').value = '';
+  $('clientPhone').value = '';$('reserveModal').hidden = false;
+};
+
+$('closeModal').onclick = () =>$('reserveModal').hidden = true;
+
+$('confirmReserve').onclick = () => {
+  const name = $('clientName').value.trim();
+  const phone = $('clientPhone').value.trim();
+  if (!name || !phone) {
+    alert('يرجى إدخال الاسم ورقم الهاتف بشكل صحيح');
+    return;
+  }
+  $('reserveModal').hidden = true;
+  showToast('تم إرسال طلب حجز الرقم بنجاح! سنتواصل معك قريباً.');
+};
+
+$('searchInput').oninput = renderNumbers;
+$('catSelect').onchange = renderNumbers;
+
+// تبديل المظهر
+$('themeToggle').onclick = () => {
+  const root = document.documentElement;
+  root.dataset.t = root.dataset.t === 'light' ? 'dark' : 'light';
+};
+
+renderNumbers();
+</script>
+</body>
+</html>
