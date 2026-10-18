@@ -3,8 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>حجز الأرقام المميزة</title>
+<title>نظام حجز الأرقام المميزة</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<!-- استدعاء مكتبة EmailJS لإرسال الإيميلات -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script type="text/javascript">
+  // ضع الـ Public Key الخاص بك هنا
+  emailjs.init("YOUR_PUBLIC_KEY");
+</script>
+
 <style>
 :root {
   --bg1: #061a12;
@@ -39,13 +46,15 @@ h1{font-size:24px;font-weight:900;background:linear-gradient(90deg,var(--g),var(
 .filters{display:flex;gap:12px;flex-wrap:wrap}
 .filters input,.filters select{flex:1;min-width:200px;padding:12px 16px;border-radius:14px;border:1px solid var(--bd);background:var(--glass);color:var(--ink);font-size:15px;font-weight:600}
 .filters input::placeholder{color:var(--mut)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
 .number-card{padding:20px;border-radius:20px;background:var(--glass);border:1px solid var(--bd);box-shadow:var(--sh);backdrop-filter:blur(10px);display:flex;flex-direction:column;gap:12px;transition:transform 0.2s}
 .number-card:hover{transform:translateY(-4px)}
-.num-badge{font-size:24px;font-weight:900;letter-spacing:1px;color:var(--gold);direction:ltr;text-align:right}
-.num-info{display:flex;justify-content:space-between;font-size:13px;color:var(--mut);font-weight:600}
-.price{font-size:18px;font-weight:800;color:var(--ink)}
-.reserve-btn{padding:10px;border-radius:12px;background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;font-weight:700;border:none;cursor:pointer;transition:opacity 0.2s}
+.num-badge{font-size:22px;font-weight:900;letter-spacing:1px;color:var(--gold);direction:ltr;text-align:right}
+.category-tag{font-size:13px;font-weight:700;color:var(--mut)}
+.price-box{display:flex;flex-direction:column;gap:2px}
+.old-price{font-size:13px;text-decoration:line-through;color:var(--mut)}
+.new-price{font-size:18px;font-weight:800;color:var(--ink)}
+.reserve-btn{padding:10px;border-radius:12px;background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;font-weight:700;border:none;cursor:pointer;transition:opacity 0.2s;margin-top:4px}
 .reserve-btn:active{transform:scale(0.97)}
 /* Modal */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(6px);display:grid;place-items:center;padding:16px;z-index:100}
@@ -70,17 +79,21 @@ h1{font-size:24px;font-weight:900;background:linear-gradient(90deg,var(--g),var(
   </header>
 
   <div class="hero-card">
-    <h2>اختر رقمك المميز بكل سهولة</h2>
-    <p>تصفح الأرقام المتاحة، اختر الرقم المناسب، واحتجزه خلال ثوانٍ معدودة قبل نفاذه.</p>
+    <h2>اختر رقمك المميز بأفضل العروض والأسعار</h2>
+    <p>تصفح الفئات المتاحة، اختر رقمك، واحتجزه ليصلنا طلبك فوراً.</p>
   </div>
 
   <div class="filters">
-    <input type="text" id="searchInput" placeholder="ابحث برقم معين (مثلاً: 770 أو 780)...">
+    <input type="text" id="searchInput" placeholder="ابحث برقم معين...">
     <select id="catSelect">
-      <option value="all">جميع الفئات</option>
-      <option value="gold">أرقام ذهبية</option>
-      <option value="silver">أرقام فضية</option>
-      <option value="normal">أرقام مميزة عادية</option>
+      <option value="all">جميع الفئات والعروض</option>
+      <option value="gold50">ذهبي (فئة 50)</option>
+      <option value="gold100">ذهبي (فئة 100)</option>
+      <option value="platinum">بلاتنيوم</option>
+      <option value="platinum_plus">بلاتنيوم +</option>
+      <option value="yaqout">ياقوت</option>
+      <option value="yaqout_plus">ياقوت +</option>
+      <option value="yaqout_pp">ياقوت ++</option>
     </select>
   </div>
 
@@ -95,7 +108,7 @@ h1{font-size:24px;font-weight:900;background:linear-gradient(90deg,var(--g),var(
     <input type="text" id="clientName" placeholder="الاسم الكامل">
     <input type="tel" id="clientPhone" placeholder="رقم الهاتف للتواصل">
     <div class="modal-actions">
-      <button class="btn-submit" id="confirmReserve">تأكيد الحجز</button>
+      <button class="btn-submit" id="confirmReserve">تأكيد وإرسال الحجز</button>
       <button class="btn-cancel" id="closeModal">إلغاء</button>
     </div>
   </div>
@@ -106,14 +119,15 @@ h1{font-size:24px;font-weight:900;background:linear-gradient(90deg,var(--g),var(
 <script>
 const $ = id => document.getElementById(id);
 
-// بيانات تجريبية للأرقام المميزة
+// جدول الأرقام المحدثة والأسعار الجديدة
 const numbersData = [
-  { id: 1, number: '0780 999 1122', cat: 'gold', price: '150,000 د.ع', status: 'available' },
-  { id: 2, number: '0771 555 4433', cat: 'silver', price: '75,000 د.ع', status: 'available' },
-  { id: 3, number: '0750 333 8899', cat: 'gold', price: '200,000 د.ع', status: 'available' },
-  { id: 4, number: '0790 123 4567', cat: 'normal', price: '45,000 د.ع', status: 'available' },
-  { id: 5, number: '0782 777 0011', cat: 'silver', price: '90,000 د.ع', status: 'available' },
-  { id: 6, number: '0770 888 2233', cat: 'gold', price: '180,000 د.ع', status: 'available' }
+  { id: 1, number: '0780 111 2233', cat: 'gold50', catName: 'الخط الذهبي (فئة 50)', oldPrice: '50,000 د.ع', price: '25,000 د.ع' },
+  { id: 2, number: '0771 444 5566', cat: 'gold100', catName: 'الخط الذهبي (فئة 100)', oldPrice: '100,000 د.ع', price: '50,000 د.ع' },
+  { id: 3, number: '0750 777 8899', cat: 'platinum', catName: 'خط بلاتنيوم', oldPrice: '250,000 د.ع', price: '175,000 د.ع' },
+  { id: 4, number: '0790 333 2211', cat: 'platinum_plus', catName: 'خط بلاتنيوم +', oldPrice: '500,000 د.ع', price: '350,000 د.ع' },
+  { id: 5, number: '0782 999 0000', cat: 'yaqout', catName: 'خط ياقوت', oldPrice: '1,000,000 د.ع', price: '700,000 د.ع' },
+  { id: 6, number: '0770 555 1111', cat: 'yaqout_plus', catName: 'خط ياقوت +', oldPrice: '2,000,000 د.ع', price: '1,400,000 د.ع' },
+  { id: 7, number: '0751 888 7777', cat: 'yaqout_pp', catName: 'خط ياقوت ++', oldPrice: '3,500,000 د.ع', price: '2,450,000 د.ع' }
 ];
 
 let currentSelectedNum = null;
@@ -140,9 +154,10 @@ function renderNumbers() {
     card.className = 'number-card';
     card.innerHTML = `
       <div class="num-badge">${item.number}</div>
-      <div class="num-info">
-        <span>الفئة: ${item.cat === 'gold' ? 'ذهبية 🌟' : item.cat === 'silver' ? 'فضية 🥈' : 'مميزة'}</span>
-        <span class="price">${item.price}</span>
+      <div class="category-tag">${item.catName}</div>
+      <div class="price-box">
+        <span class="old-price">السعر السابق: ${item.oldPrice}</span>
+        <span class="new-price">السعر بعد الخصم: ${item.price}</span>
       </div>
       <button class="reserve-btn" onclick="openModal(${item.id})">حجز الرقم</button>
     `;
@@ -166,21 +181,46 @@ window.openModal = function(id) {
 
 $('closeModal').onclick = () =>$('reserveModal').hidden = true;
 
+// إرسال الإيميل عند تأكيد الحجز
 $('confirmReserve').onclick = () => {
   const name = $('clientName').value.trim();
   const phone = $('clientPhone').value.trim();
+
   if (!name || !phone) {
     alert('يرجى إدخال الاسم ورقم الهاتف بشكل صحيح');
     return;
   }
-  $('reserveModal').hidden = true;
-  showToast('تم إرسال طلب حجز الرقم بنجاح! سنتواصل معك قريباً.');
+
+  $('confirmReserve').textContent = 'جاري الإرسال...';
+  $('confirmReserve').disabled = true;
+
+  // إعداد بيانات البريد المراد إرسالها
+  const templateParams = {
+    number: currentSelectedNum.number,
+    cat_name: currentSelectedNum.catName,
+    price: currentSelectedNum.price,
+    client_name: name,
+    client_phone: phone
+  };
+
+  // استبدال YOUR_SERVICE_ID و YOUR_TEMPLATE_ID بالمعلومات الخاصة بك من EmailJS
+  emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", templateParams)
+    .then(() => {
+      $('reserveModal').hidden = true;
+      showToast('تم إرسال تفاصيل الحجز إلى بريدك الإلكتروني بنجاح!');
+      $('confirmReserve').textContent = 'تأكيد وإرسال الحجز';
+      $('confirmReserve').disabled = false;
+    }, (error) => {
+      alert('حدث خطأ أثناء الإرسال، يجدر التحقق من الاتصال.');
+      console.error('FAILED...', error);
+      $('confirmReserve').textContent = 'تأكيد وإرسال الحجز';
+      $('confirmReserve').disabled = false;
+    });
 };
 
 $('searchInput').oninput = renderNumbers;
 $('catSelect').onchange = renderNumbers;
 
-// تبديل المظهر
 $('themeToggle').onclick = () => {
   const root = document.documentElement;
   root.dataset.t = root.dataset.t === 'light' ? 'dark' : 'light';
