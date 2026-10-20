@@ -1,4 +1,4 @@
-<!موبي باص محمد جواد html>
+<!  محمد جواد frn.mohmed.wmobibus>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -338,7 +338,7 @@
 
         <!-- Footer -->
         <footer class="text-center text-xs text-slate-500 py-4 border-t border-white/5">
-            تطبيق آلة حاسبة لخطوط الفاتورة أسياسيل / زين / كورك التناسبية &copy; 2026
+            تطبيق آلة حاسبة لخطوط الفاتورة أسياسيل / موبي باص /  التناسبية &copy; 2026
         </footer>
     </div>
 
