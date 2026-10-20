@@ -106,7 +106,7 @@
                     <i class="fa-solid fa-file-invoice-dollar text-3xl text-white"></i>
                 </div>
                 <h1 class="text-2xl sm:text-4xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-indigo-200">
-                    حاسبة خطوط الفاتورة التناسبية
+                    حاسبة خطوط الفاتورة Red plus
                 </h1>
                 <p class="text-slate-400 text-xs sm:text-sm max-w-xl leading-relaxed">
                     احسب مستحقات الفاتورة، الدقائق، وحزم الإنترنت بالتناسب الدقيق (Pro-rata) وحسب تاريخ الاستخدام بأسلوب عصري وسريع.
@@ -531,7 +531,7 @@
             const minutes = document.getElementById('resMinutes').innerText;
             const gb = document.getElementById('resGB').innerText;
 
-            const summaryText = `📊 *تقرير فاتورة الخط التناسبي:*
+            const summaryText = `📊 *تقرير Red plusفاتورة الخط :*
 --------------------------------
 💰 *المبلغ المستحق حالياً:* ${due} دينار عراقي
 📅 *عدد الأيام المنقضية:* ${days} من أصل ${totalDays} يوم
