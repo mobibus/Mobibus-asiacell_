@@ -538,7 +538,7 @@
 📞 *الدقائق النازلة:* ${minutes}
 🌐 *الإنترنت النازل:* ${gb}
 --------------------------------
-تم الحساب بواسطة حاسبة الفاتورة التناسبية.`;
+تم الحساب بواسطة محمد جواد 
 
             // Fallback execCommand clipboard copy
             const textArea = document.createElement("textarea");
