@@ -338,7 +338,7 @@
 
         <!-- Footer -->
         <footer class="text-center text-xs text-slate-500 py-4 border-t border-white/5">
-            تطبيق آلة حاسبة لخطوط الفاتورة أسياسيل / موب باص /  التناسبية &copy; 2026
+            تطبيق آلة حاسبة لخطوط الفاتورة أسياسيل / موبي باص /  التناسبية &copy; 2026
         </footer>
     </div>
 
