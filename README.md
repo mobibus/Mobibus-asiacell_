@@ -540,7 +540,7 @@
 --------------------------------
 تم الحساب بواسطة محمد جواد 
 
-            // Fallback execCommand clipboard copy
+            //Fallback execCommand clipboard copy
             const textArea = document.createElement("textarea");
             textArea.value = summaryText;
             document.body.appendChild(textArea);
